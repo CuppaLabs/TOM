@@ -5,6 +5,7 @@ import { AppRouterModule } from './app.router';
 import { AppComponent } from './app.component';
 import { Dashboard } from './dashboard/dashboard.component';
 import { PostComponent } from './post/post.component';
+import { ArticleComponent } from './article/article.component';
 
 import {EditorMdModule} from './editormd/editor-md.module';
 
@@ -12,7 +13,8 @@ import {EditorMdModule} from './editormd/editor-md.module';
   declarations: [
     AppComponent,
     Dashboard,
-    PostComponent
+    PostComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -22,6 +22,9 @@ export class Dashboard {
     openPostModal() {
       this.router.navigate([{ outlets: { postPopup: [ 'post' ] }}]); 
     }
+    openArticleModal() {
+      this.router.navigate([{ outlets: { articlePopup: [ 'article' ] }}]); 
+    }
     onComplate(editorInstance: any) {
         this.editorInstance = editorInstance;
        
