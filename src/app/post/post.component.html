@@ -1,0 +1,36 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between">
+                        <span>Post News / Article</span>
+                        <i class="far fa-times-circle" (click)="goToDashboard()"></i>
+
+                    </h5>
+                    <div class="row">
+                        <div class="col">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input type="text" class="form-control" placeholder="">
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1">Category</label>
+                            <select class="form-control" placeholder="">
+                                <option value="">Select Category</option>
+                                <option value="js">Javascript</option>
+                                <option value="nodejs">NodeJS</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div id="ed" (onComplete)="onComplate($event)" appEditorMd [editorConfig]="conf"></div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-lg btn-block">Publish Post</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
