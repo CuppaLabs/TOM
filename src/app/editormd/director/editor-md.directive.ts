@@ -19,4 +19,7 @@ export class EditorMdDirective implements AfterViewInit {
 
   constructor(@Attribute('id') private id: string) {
   }
+  getHtml() {
+    return this.edit.getHTML();
+  }
 }

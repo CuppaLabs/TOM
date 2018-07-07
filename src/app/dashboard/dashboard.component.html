@@ -1,10 +1,26 @@
 <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
     <a class="navbar-brand col-sm-3 col-md-3 mr-0" href="#">Digital Team - Theme of the Month</a>
-    <ul class="navbar-nav px-3">
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a *ngIf="!isLoggedIn" class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</a>
+        <a *ngIf="isLoggedIn" class="btn btn-light btn-sm">
+            <img _ngcontent-c1="" class="user-avatar" src="assets/avatar.png">
+            Welcome {{loggedUser.name}}
+        </a>
+        <a *ngIf="isLoggedIn" class="btn btn-light btn-sm logout-btn" (click)="logout()">
+            <i class="fa fa-sign-out-alt"></i>
+        </a>
+    </nav>
+    <!--    <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</a>
         </li>
-    </ul>
+        <li class="nav-item text-nowrap">
+            <a class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</a>
+        </li>
+        <li class="nav-item text-nowrap">
+            <a class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</a>
+        </li>
+    </ul>-->
 </nav>
 
 <div class="container-fluid">
@@ -16,79 +32,20 @@
             </div>
             <div class="sidebar-sticky left-sticky">
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <a *ngFor="let post of posts" href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="row">
 
+                        </div>
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
+                            <h5 class="mb-1">{{post.title}}</h5>
                             <small>3 days ago</small>
                         </div>
-                        <div class="list-icon">
-                            <img src="assets/js-logo.png" />
+                        <div *ngIf="post.category" class="list-icon">
+                            <img *ngIf="post.category == 'js'" src="assets/js-logo.png" />
+                            <img *ngIf="post.category == 'nodejs'" src="assets/nodejs-logo.jpg" />
                         </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small>Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <div class="list-icon">
-                            <img src="assets/js-logo.png" />
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <div class="list-icon">
-                            <img src="assets/nodejs-logo.jpg" />
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">List group item heading</h5>
-                            <small class="text-muted">3 days ago</small>
-                        </div>
-                        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                        <small class="text-muted">Donec id elit non mi porta.</small>
+                        <p class="mb-1">{{post.description}}</p>
+                        <small>By : {{post.user.name}}</small>
                     </a>
                 </div>
             </div>
@@ -127,75 +84,35 @@
                         <button class="btn btn-sm btn-primary" (click)="openArticleModal()">Post KM Article</button>
                     </div>
                     <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <a *ngFor="let article of articles" href="{{article.link}}" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="row">
                                 <div class="col-md-10" style="padding-right: 0;">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">List group item heading</h5>
+                                        <a href="{{article.link}}">
+                                            <h5 class="mb-1">{{article.title}}</h5>
+                                        </a>
                                     </div>
-                                    <div class="list-icon">
-                                        <img src="assets/js-logo.png" />
+                                    <div *ngIf="article.category" class="list-icon">
+                                        <img *ngIf="article.category =='nodejs'" src="assets/nodejs-logo.jpg" />
+                                        <img *ngIf="article.category =='js'" src="assets/js-logo.png" />
                                     </div>
-                                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                                        blandit.
+                                    <p class="mb-1">
+                                        {{article.description}}
                                     </p>
-                                    <small>Donec id elit non mi porta.</small>
+
                                 </div>
                                 <div class="col-md-2">
-
-                                    <a class="read-more">
+                                    <a href="{{article.link}}" class="read-more">
                                         <span class="fa fa-caret-right"></span>   
                                         <span class="rm-title">Read </span>
                                     </a>
                                 </div>
+                                <div class="col-md-12">
+                                    <small>By: {{article.user.name}}</small>
+                                </div>
                             </div>
                         </a>
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="row">
-                                <div class="col-md-10" style="padding-right: 0;">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">List group item heading</h5>
-                                    </div>
-                                    <div class="list-icon">
-                                        <img src="assets/js-logo.png" />
-                                    </div>
-                                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                                        blandit.
-                                    </p>
-                                    <small>Donec id elit non mi porta.</small>
-                                </div>
-                                <div class="col-md-2">
 
-                                    <a class="read-more">
-                                        <span class="fa fa-caret-right"></span>   
-                                        <span class="rm-title">Read </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="row">
-                                <div class="col-md-10" style="padding-right: 0;">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">List group item heading</h5>
-                                    </div>
-                                    <div class="list-icon">
-                                        <img src="assets/js-logo.png" />
-                                    </div>
-                                    <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius
-                                        blandit.
-                                    </p>
-                                    <small>Donec id elit non mi porta.</small>
-                                </div>
-                                <div class="col-md-2">
-
-                                    <a class="read-more">
-                                        <span class="fa fa-caret-right"></span>   
-                                        <span class="rm-title">Read </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -219,7 +136,9 @@
                     <div class="col">
                         <div class="gift-container">
                             <button type="button" class="btn btn-primary btn-block">
-                            Your Total Credits : <span class="badge badge-light">54</span>
+                            Your Total Credits : 
+                            <a href="#" *ngIf="!isLoggedIn" class="credits-msg" data-toggle="modal" data-target="#exampleModal">login to see credits</a>
+                            <span *ngIf="isLoggedIn" class="badge badge-light">{{loggedUser.credits}}</span>
                             </button>
                             <img class="bounce" src="assets/gift.png" />
                             <button type="button" class="btn btn-danger btn-sm btn-block">Click to open</button>
@@ -234,59 +153,11 @@
                         </div>
                         <div class="user-list">
                             <ul class="list-group">
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <li *ngFor="let user of users" class="list-group-item d-flex justify-content-between align-items-center">
                                     <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
+                                        <img class="user-avatar" src="assets/avatar.png" /> {{user.name}}
                                     </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
-                                </li>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <img class="user-avatar" src="assets/avatar.png" /> Pradeep Kumar Terli
-                                    </div>
-                                    <span class="badge badge-primary badge-pill">14</span>
+                                    <span class="badge badge-primary badge-pill">{{user.credits}}</span>
                                 </li>
                             </ul>
                         </div>
@@ -306,21 +177,29 @@
           <span aria-hidden="true">&times;</span>
         </button>
             </div>
-            <div class="modal-body">
-                <form>
+            <form #loginForm="ngForm">
+                <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" #email="ngModel" aria-describedby="emailHelp" value="{{user.email}}"
+                            placeholder="Enter email" [(ngModel)]="user.email" required>
+                        <div [hidden]="email.untouched && email.invalid && email.pristine || email.touched && email.dirty && email.valid">
+                            <div class="text-danger" [hidden]="!email.hasError('required')">* Email is required</div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <input type="password" class="form-control" name="passwordfld" #passwordfld="ngModel" id="exampleInputPassword1" placeholder="Password" value="{{user.password}}"
+                            [(ngModel)]="user.password" required>
+                             <div [hidden]="passwordfld.untouched && passwordfld.invalid && passwordfld.pristine || passwordfld.touched && passwordfld.dirty && passwordfld.valid">
+                            <div class="text-danger" [hidden]="!passwordfld.hasError('required')">* Password is required</div>
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!loginForm.form.valid">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

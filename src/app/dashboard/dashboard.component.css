@@ -5,6 +5,12 @@
     margin-left: -20px;
     margin-right: -20px;
 }
+.logout-btn {
+    color: #dc3545 !important;
+}
+.logout-btn i {
+    font-size: 22px;
+}
 .sticky-header {
     padding: 15px;
     margin-top: 48px;
@@ -47,6 +53,11 @@
     border-radius: 25px;
     margin-right: 10px;
 }
+.credits-msg{
+    font-style: italic;
+    color: #fff;
+    font-size: 12px;
+}
 .gift-container img {
     width: 65%;
     margin: 0px auto;
@@ -66,7 +77,8 @@
 .read-more {
     text-align: center;
     display: block;
-    margin-top: 100%;
+    margin-top: 50%;
+    text-decoration: none;
 }
 .read-more .fa {
     font-size: 42px;
@@ -82,6 +94,7 @@
 .user-list {
     height: calc(100vh - 380px);
     overflow: auto;
+    background: #fff;
 }
 .bounce {
     animation: bounce 2s;

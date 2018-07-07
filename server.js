@@ -27,13 +27,14 @@ var userSchema = new mongoose.Schema({
     password: { type: String, select: false },
     name: { type: String },
     picture: { type: String },
-    deviceId: { type: String }
+    credits: { type: Number }
 });
 
 var postSchema = new mongoose.Schema({
     title: { type: String },
     category: { type: String },
     content: { type: String },
+    description: { type: String },
     publisherId: { type: String }
 });
 
@@ -95,7 +96,7 @@ if (app.get('env') === 'production') {
 app.use(express.static(path.join(__dirname, '/dist')));
 
 
-function subscribeToNews() {
+/*function subscribeToNews() {
     User.find((err, devices) => {
         if (!err && devices) {
             let androidDevices = [];
@@ -116,8 +117,8 @@ function subscribeToNews() {
                 });
         }
     });
-}
-subscribeToNews();
+}*/
+//subscribeToNews();
 /*
  |--------------------------------------------------------------------------
  | Login Required Middleware
@@ -206,7 +207,10 @@ app.post('/auth/login', function (req, res) {
             if (!isMatch) {
                 return res.status(401).send({ message: 'Invalid email and/or password' });
             }
-            res.send({ token: createJWT(user) });
+            User.findOne({ _id: user }, 'name email', function (err, user) {
+                   res.send({ token: createJWT(user), user: user });     
+                });
+            
         });
     });
 });
@@ -225,7 +229,7 @@ app.post('/auth/signup', function (req, res) {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            deviceId: req.body.deviceId
+            credits: 0
         });
         user.save(function (err, result) {
             if (err) {
@@ -242,6 +246,7 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
         title: req.body.title,
         category: req.body.category,
         content: req.body.content,
+        description: req.body.description,
         publisherId: req.user
     });
     post.save(function (err, result) {
@@ -254,10 +259,10 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
 
 app.post('/article/create', ensureAuthenticated, function (req, res) {
 
-    var article = new Post({
+    var article = new Article({
         title: req.body.title,
         category: req.body.category,
-        description: req.body.content,
+        description: req.body.description,
         link: req.body.link,
         publisherId: req.user
     });
@@ -271,58 +276,82 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
 
 app.get('/post/getAll', function (req, res) {
 
-    Post.find({},'_id title category content publisherId', function (err, posts) {
+    Post.find({}, '_id title category content description publisherId', function (err, posts) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
         var len = posts.length;
         var resArr = [];
         var currIndex = 0;
-        posts.forEach(post => {
+        if (len > 0) {
+            posts.forEach(post => {
 
-            User.findOne({ _id: post.publisherId }, 'name email', function (err, user) {
-                var tempObj = {};
-                tempObj = Object.assign(tempObj, post);
-                tempObj._doc['user'] = user;
-                resArr.push(tempObj._doc);
-                ++currIndex;
-                if(currIndex == len){
-                    res.send(resArr).end();
-                }
+                User.findOne({ _id: post.publisherId }, 'name email', function (err, user) {
+                    var tempObj = {};
+                    tempObj = Object.assign(tempObj, post);
+                    tempObj._doc['user'] = user;
+                    resArr.push(tempObj._doc);
+                    ++currIndex;
+                    if (currIndex == len) {
+                        res.send(resArr).end();
+                    }
+                });
+
             });
+        }
+        else {
+            res.send(resArr).end();
+        }
 
-        });
-        
     });
 });
 
 app.get('/article/getAll', function (req, res) {
 
-    Article.find({},'_id title category description link publisherId', function (err, articles) {
+    Article.find({}, '_id title category description link publisherId', function (err, articles) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
         var len = articles.length;
         var resArr = [];
         var currIndex = 0;
-        articles.forEach(article => {
+        if (len > 0) {
+            articles.forEach(article => {
 
-            User.findOne({ _id: article.publisherId }, 'name email', function (err, user) {
-                var tempObj = {};
-                tempObj = Object.assign(tempObj, article);
-                tempObj._doc['user'] = user;
-                resArr.push(tempObj._doc);
-                ++currIndex;
-                if(currIndex == len){
-                    res.send(resArr).end();
-                }
+                User.findOne({ _id: article.publisherId }, 'name email', function (err, user) {
+                    var tempObj = {};
+                    tempObj = Object.assign(tempObj, article);
+                    tempObj._doc['user'] = user;
+                    resArr.push(tempObj._doc);
+                    ++currIndex;
+                    if (currIndex == len) {
+                        res.status(200).send(resArr).end();
+                    }
+                });
+
             });
+        }
+        else {
+            res.status(200).send(resArr).end();
+        }
 
-        });
-        
+
     });
 });
-app.post('/notifications/send', function (req, res) {
+
+app.get('/user/getAll', function (req, res) {
+
+    User.find({}, '_id name email credits', function (err, users) {
+        if (err) {
+            res.status(500).send({ message: err.message });
+        }
+        res.status(200).send(users).end();
+    });
+});
+
+
+
+/*app.post('/notifications/send', function (req, res) {
     var registrationToken = 'creFgPPXFYk:APA91bFCIn3U_Q5Q-O4Rq3jkntiefX-hYbBXCgxhlFEqpCYgx8XIhgkhUv6BYHQf3yNvFt2EwnyCIVCUY28JqgAEXq1B9skBY0Du-mOFeaR4n6MubQrFxY4XJA5z81cS2_g5kLEXkX4N7A_aObZs2jO4PjEFeWXcbA';
 
     var message = {
@@ -359,8 +388,10 @@ app.post('/notifications/send', function (req, res) {
             }
             res.send({ token: createJWT(user) });
           });
-        }); */
-});
+        });
+});*/
+
+
 var clientId = 0;
 var clients = {}; // <- Keep a map of attached clients
 

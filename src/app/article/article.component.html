@@ -11,11 +11,11 @@
                     <div class="row">
                         <div class="col-md-9">
                             <label for="exampleInputEmail1">Title</label>
-                            <input type="text" class="form-control" placeholder="">
+                            <input type="text" class="form-control" placeholder="" [(ngModel)]="article.title">
                         </div>
                         <div class="col-md-3">
                             <label for="exampleInputEmail1">Category</label>
-                            <select class="form-control" placeholder="">
+                            <select class="form-control" placeholder="Select" [(ngModel)]="article.category">
                                 <option value="">Select Category</option>
                                 <option value="js">Javascript</option>
                                 <option value="nodejs">NodeJS</option>
@@ -26,18 +26,18 @@
                     <div class="row">
                         <div class="col">
                            <label for="exampleInputEmail1">URL (Link to KM article)</label>
-                            <input type="text" class="form-control" placeholder="Enter the KM link">     
+                            <input type="text" class="form-control" placeholder="Enter the KM link" [(ngModel)]="article.link">     
                         </div>
                     </div>
                      <br>
                     <div class="row">
                         <div class="col">
                            <label for="exampleInputEmail1">Description </label>
-                            <textarea type="text" class="form-control" placeholder="Enter the hyperlink"> </textarea>   
+                            <textarea type="text" class="form-control" placeholder="Enter the hyperlink" [(ngModel)]="article.description"> </textarea>   
                         </div>
                     </div>
                      <br>
-                    <button type="button" class="btn btn-primary btn-lg btn-block">Publish KM Article</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle()">Publish KM Article</button>
                 </div>
             </div>
         </div>

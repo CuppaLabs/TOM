@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component , ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { EditorConfig } from '../editormd/director/model/editor-config';
-
+import { AppService } from '../app.services'
+import { EditorMdDirective } from '../editormd/director/editor-md.directive'
 @Component({
     templateUrl: 'post.component.html',
     styleUrls: ['post.component.css']
@@ -10,7 +11,15 @@ import { EditorConfig } from '../editormd/director/model/editor-config';
 export class PostComponent {
     conf = new EditorConfig();
     editorInstance: any;
-    constructor(private router: Router) {
+    @ViewChild(EditorMdDirective) vc:EditorMdDirective; 
+    
+    post: any = {
+        title: "",
+        category:"",
+        content:"",
+        description:""
+    }
+    constructor(private router: Router, private appService: AppService) {
 
     }
     onComplate(editorInstance: any) {
@@ -19,5 +28,13 @@ export class PostComponent {
     }
     goToDashboard() {
         this.router.navigate([{ outlets: { postPopup: null }}]);
+    }
+    createPost() {
+        this.post.content = this.vc.getHtml();
+        this.appService.createPost(this.post).subscribe(res => {
+            console.log(res);
+        }, error => {
+
+        });
     }
 }

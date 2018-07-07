@@ -11,15 +11,18 @@
                     <div class="row">
                         <div class="col">
                             <label for="exampleInputEmail1">Title</label>
-                            <input type="text" class="form-control" placeholder="">
-                        </div>
-                        <div class="col">
+                            <input type="text" class="form-control" placeholder="" [(ngModel)]="post.title">
+                            <br>
                             <label for="exampleInputEmail1">Category</label>
-                            <select class="form-control" placeholder="">
+                            <select class="form-control" placeholder="" [(ngModel)]="post.category">
                                 <option value="">Select Category</option>
                                 <option value="js">Javascript</option>
                                 <option value="nodejs">NodeJS</option>
                             </select>
+                        </div>
+                        <div class="col">
+                            <label for="exampleInputEmail1">Description</label>
+                            <textarea style="height: 125px;" class="form-control" placeholder="" [(ngModel)]="post.description"></textarea>
                         </div>
                     </div>
                     <br>
@@ -28,7 +31,7 @@
                             <div id="ed" (onComplete)="onComplate($event)" appEditorMd [editorConfig]="conf"></div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg btn-block">Publish Post</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createPost()">Publish Post</button>
                 </div>
             </div>
         </div>
