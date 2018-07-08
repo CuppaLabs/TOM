@@ -7,6 +7,9 @@ import { AppComponent } from './app.component';
 import { Dashboard } from './dashboard/dashboard.component';
 import { PostComponent } from './post/post.component';
 import { ArticleComponent } from './article/article.component';
+import { ScheduleComponent } from './information/schedule.component';
+import { FaqComponent } from './information/faq.component';
+import { EscapeHtmlPipe } from './sanitizer.pipe';
 
 import {EditorMdModule} from './editormd/editor-md.module';
 import { AppService } from './app.services'
@@ -15,7 +18,10 @@ import { AppService } from './app.services'
     AppComponent,
     Dashboard,
     PostComponent,
-    ArticleComponent
+    ArticleComponent,
+    ScheduleComponent,
+    FaqComponent,
+    EscapeHtmlPipe
   ],
   imports: [
     BrowserModule,

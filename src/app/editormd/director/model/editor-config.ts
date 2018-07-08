@@ -17,7 +17,7 @@ export class EditorConfig {
   public flowChart = true;
   public syncScrolling = true;
   public sequenceDiagram = true;
-  public imageUpload = true;
+  public imageUpload = false;
   public imageFormats = ['jpg', 'jpeg', 'gif', 'png', 'bmp', 'webp'];
   public imageUploadURL = '';
 

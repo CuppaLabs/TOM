@@ -3,6 +3,7 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { EditorConfig } from '../editormd/director/model/editor-config';
 import { Router } from '@angular/router';
 import { AppService } from '../app.services'
+import { DomSanitizer } from '@angular/platform-browser';
 
 declare var $: any;
 declare var $: any;
@@ -23,7 +24,10 @@ export class Dashboard implements OnInit {
     users: any = [];
     loggedUser: any = {};
     toloc: any = '';
-    constructor(private router: Router, private appService: AppService) {
+    selectedPost: any = {};
+    readPost: boolean = false;
+
+    constructor(private router: Router, private appService: AppService, private sanitizer: DomSanitizer) {
 
     }
     ngOnInit() {
@@ -85,10 +89,10 @@ export class Dashboard implements OnInit {
                 sessionStorage.setItem("token", res.token);
                 this.isLoggedIn = true;
                 this.getUserProfile();
-                if(this.toloc == 'post'){
+                if (this.toloc == 'post') {
                     this.router.navigate([{ outlets: { postPopup: ['post'] } }]);
                 }
-                else if(this.toloc == 'article'){
+                else if (this.toloc == 'article') {
                     this.router.navigate([{ outlets: { articlePopup: ['article'] } }]);
                 }
             },
@@ -110,6 +114,26 @@ export class Dashboard implements OnInit {
 
             }
         );
+    }
+    openScheduleModal() {
+        this.router.navigate([{ outlets: { schedulePopup: ['schedule'] } }]);
+    }
+    viewPost(post: any) {
+        this.closeViewPost();
+        post["active"] = true;
+        document.getElementsByTagName('body')[0].classList.add('overflow-hidden');
+        document.getElementsByTagName('html')[0].style.overflow = 'hidden';
+        setTimeout(() => {
+            this.readPost = true;
+            this.selectedPost = post;
+        });
+
+    }
+    closeViewPost() {
+        document.getElementsByTagName('body')[0].classList.remove('overflow-hidden');
+        document.getElementsByTagName('html')[0].style.overflow = 'auto';
+        this.selectedPost.active = false;
+        this.readPost = false;
     }
 
 }
