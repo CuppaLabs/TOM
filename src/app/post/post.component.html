@@ -31,7 +31,9 @@
                             <div id="ed" (onComplete)="onComplate($event)" appEditorMd [editorConfig]="conf"></div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createPost()">Publish Post</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createPost()">Publish Post
+                        <img *ngIf="loading" class="loading-img" src="assets/loading.gif"/>
+                   </button>
                 </div>
             </div>
         </div>

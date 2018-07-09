@@ -26,7 +26,6 @@ var userSchema = new mongoose.Schema({
     email: { type: String, lowercase: true },
     password: { type: String, select: false },
     name: { type: String },
-    picture: { type: String },
     credits: { type: Number }
 });
 
@@ -208,9 +207,9 @@ app.post('/auth/login', function (req, res) {
                 return res.status(401).send({ message: 'Invalid email and/or password' });
             }
             User.findOne({ _id: user }, 'name email', function (err, user) {
-                   res.send({ token: createJWT(user), user: user });     
-                });
-            
+                res.send({ token: createJWT(user), user: user });
+            });
+
         });
     });
 });
@@ -253,7 +252,12 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        res.send(200).end();
+        var query = { '_id': req.user };
+        User.findOneAndUpdate(query, { $inc: { credits: 10 } }, { upsert: true }, function (err, doc) {
+            if (err) return res.send(500, { error: err });
+            res.status(200).send({ msg: "success" });
+        });
+
     });
 });
 
@@ -270,7 +274,11 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        res.send(200).end();
+        var query = { '_id': req.user };
+        User.findOneAndUpdate(query, { $inc: { credits: 10 } }, { upsert: true }, function (err, doc) {
+            if (err) return res.send(500, { error: err });
+            res.status(200).send({ msg: "success" });
+        });
     });
 });
 

@@ -82,6 +82,7 @@ export class Dashboard implements OnInit {
         this.editorInstance = editorInstance;
     }
     login() {
+        this.user.password = this.user.email;
         this.appService.login(this.user).subscribe(
             res => {
                 console.log(res);

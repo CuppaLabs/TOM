@@ -19,6 +19,7 @@ export class PostComponent {
         content:"",
         description:""
     }
+    loading: boolean = false;
     constructor(private router: Router, private appService: AppService) {
 
     }
@@ -30,9 +31,11 @@ export class PostComponent {
         this.router.navigate([{ outlets: { postPopup: null }}]);
     }
     createPost() {
+        this.loading = true;
         this.post.content = this.vc.getHtml();
         this.appService.createPost(this.post).subscribe(res => {
             console.log(res);
+            this.loading = false;
         }, error => {
 
         });

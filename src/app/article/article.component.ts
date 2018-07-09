@@ -12,6 +12,7 @@ export class ArticleComponent {
     article: any = {
 
     };
+    loading: any = false;
     constructor(private router: Router, private appService: AppService) {
 
     }
@@ -20,7 +21,9 @@ export class ArticleComponent {
         this.router.navigate([{ outlets: { articlePopup: null } }]);
     }
     createArticle() {
+        this.loading = true;
         this.appService.createArticle(this.article).subscribe(res => {
+            this.loading = false;
             console.log(res);
         }, error => {
 

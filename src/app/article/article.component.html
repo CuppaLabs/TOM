@@ -37,7 +37,9 @@
                         </div>
                     </div>
                      <br>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle()">Publish KM Article</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle()">Publish KM Article
+                        <img *ngIf="loading" class="loading-img" src="assets/loading.gif"/>
+                    </button>
                 </div>
             </div>
         </div>
