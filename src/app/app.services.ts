@@ -11,14 +11,20 @@ import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AppService {
-    articlesUrl = 'http://localhost:5000/article/getAll';  // URL to web api
-    postsUrl = 'http://localhost:5000/post/getAll';
-    usersUrl = 'http://localhost:5000/user/getAll';
 
-    createArticleUrl = 'http://localhost:5000/article/create';
-    createPostUrl = 'http://localhost:5000/post/create';
-    loginUrl = 'http://localhost:5000/auth/login';
-    profileUrl = 'http://localhost:5000/api/profile';
+   //domain = 'http://10.177.153.50:5000/';
+   domain = 'http://localhost:5000/';
+
+    articlesUrl = this.domain+'article/getAll';  // URL to web api
+    postsUrl = this.domain+'post/getAll';
+    usersUrl = this.domain+'user/getAll';
+
+    createArticleUrl = this.domain+'article/create';
+    createPostUrl = this.domain+'post/create';
+    loginUrl = this.domain+'auth/login';
+    profileUrl = this.domain+'api/profile';
+    createUserUrl = this.domain+'auth/signup';
+
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json',
@@ -65,7 +71,12 @@ export class AppService {
             tap(_ => 'done'
             ));
     }
-
+    createUser(data: any): Observable<any> {
+        return this.http.post<any>(this.createUserUrl, data, this.setHeaders())
+            .pipe(
+            tap(_ => 'done'
+            ));
+    }
     login(data: any): Observable<any> {
         return this.http.post<any>(this.loginUrl, data)
             .pipe(

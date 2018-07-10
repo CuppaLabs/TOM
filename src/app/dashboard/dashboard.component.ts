@@ -4,6 +4,7 @@ import { EditorConfig } from '../editormd/director/model/editor-config';
 import { Router } from '@angular/router';
 import { AppService } from '../app.services'
 import { DomSanitizer } from '@angular/platform-browser';
+import { BootstrapOptions } from '@angular/core/src/application_ref';
 
 declare var $: any;
 declare var $: any;
@@ -26,7 +27,12 @@ export class Dashboard implements OnInit {
     toloc: any = '';
     selectedPost: any = {};
     readPost: boolean = false;
-
+    newUser: any = {
+        email: "",
+        name: "",
+        password: ""
+    };
+    showTimeline: Boolean = true;
     constructor(private router: Router, private appService: AppService, private sanitizer: DomSanitizer) {
 
     }
@@ -102,6 +108,15 @@ export class Dashboard implements OnInit {
             }
         );
     }
+    createUser(){
+        this.newUser.password = this.newUser.email;
+        this.appService.createUser(this.newUser).subscribe(res => {
+            alert("created");
+            console.log(res);
+        }, error => {
+
+        });
+    }
     logout() {
         sessionStorage.clear();
         this.isLoggedIn = false;
@@ -136,5 +151,12 @@ export class Dashboard implements OnInit {
         this.selectedPost.active = false;
         this.readPost = false;
     }
-
+    toggleTimeLine() {
+        if(this.showTimeline){
+            this.showTimeline = false;
+        }
+        else {
+            this.showTimeline = true;
+        }
+    }
 }

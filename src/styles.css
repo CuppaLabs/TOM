@@ -23,7 +23,22 @@ body {
 .btn {
   position: relative;
 }
-
+.editormd-fullscreen {
+  z-index: 9999;
+}
+.status-msg .fa {
+  font-size: 20px;
+  position: absolute;
+}
+.status-msg .msg-area{
+  padding-left: 35px;
+}
+.status-msg .msg-dismiss:hover{
+  color: #000;
+}
+.status-msg .msg-dismiss{
+  cursor: pointer;
+}
 /*
  * Sidebar
  */

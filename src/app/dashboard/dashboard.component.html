@@ -4,8 +4,8 @@
         <a class="navbar-brand col-sm-3 col-md-3 mr-0" href="#">Digital Team - Theme of the Month</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto" style="padding: 0px 15px;">
@@ -20,20 +20,22 @@
                 </li>
             </ul>
             <nav class="my-2 my-md-0 mr-md-3">
+                <a class="p-2 text-dark">
+                    <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal2" style="width: 100px;">Signup</button>
+                </a>
                 <a class="p-2 text-dark" *ngIf="!isLoggedIn">
-            <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</button>
-        </a>
+                    <button class="btn btn-light btn-sm" data-toggle="modal" data-target="#exampleModal" style="width: 100px;">Login</button>
+                </a>
                 <a class="p-2 text-dark" *ngIf="isLoggedIn">
-            <button class="btn btn-light btn-sm">
-                <img _ngcontent-c1="" class="user-avatar" src="assets/avatar.png">
-                Welcome {{loggedUser.name}}
-            </button>
-        </a>
+                    <button class="btn btn-light btn-sm">
+                        <img _ngcontent-c1="" class="user-avatar" src="assets/avatar.png"> Welcome {{loggedUser.name}}
+                    </button>
+                </a>
                 <a class="p-2 text-dark" *ngIf="isLoggedIn">
-            <button class="btn btn-light btn-sm logout-btn" (click)="logout()">
-                <i class="fa fa-sign-out-alt"></i>
-            </button>
-        </a>
+                    <button class="btn btn-light btn-sm logout-btn" (click)="logout()">
+                        <i class="fa fa-sign-out-alt"></i>
+                    </button>
+                </a>
             </nav>
         </div>
     </nav>
@@ -46,12 +48,15 @@
                 </div>
                 <div class="sidebar-sticky left-sticky">
                     <div class="list-group">
-                        <a [routerLink]="" [ngClass]="{'active': post.active}" *ngFor="let post of posts" class="list-group-item list-group-item-action flex-column align-items-start" (click)="viewPost(post)">
+                        <a [routerLink]="" [ngClass]="{'active': post.active}" *ngFor="let post of posts" class="list-group-item list-group-item-action flex-column align-items-start"
+                            (click)="viewPost(post)">
                             <div class="row">
 
                             </div>
                             <div class="d-flex w-100 justify-content-between">
-                                <a [routerLink]=""><h5 class="mb-1">{{post.title}}</h5></a>
+                                <a [routerLink]="">
+                                    <h5 class="mb-1">{{post.title}}</h5>
+                                </a>
                             </div>
                             <div *ngIf="post.category" class="list-icon">
                                 <img *ngIf="post.category == 'js'" src="assets/js-logo.png" />
@@ -59,8 +64,8 @@
                             </div>
                             <p class="mb-1">{{post.description}}</p>
                             <div class="d-flex w-100 justify-content-between">
-                            <small>By : {{post.user.name}}</small> 
-                            <a [routerLink]="">Read more...</a>
+                                <small>By : {{post.user.name}}</small>
+                                <a [routerLink]="">Read more...</a>
                             </div>
                         </a>
                     </div>
@@ -119,9 +124,9 @@
                                     </div>
                                     <div class="col-md-2">
                                         <a target="_blank" href="{{article.link}}" class="read-more">
-                                        <span class="fa fa-caret-right"></span>   
-                                        <span class="rm-title">Read </span>
-                                    </a>
+                                            <span class="fa fa-caret-right"></span>
+                                            <span class="rm-title">Read </span>
+                                        </a>
                                     </div>
                                     <div class="col-md-12">
                                         <small>By: {{article.user.name}}</small>
@@ -152,10 +157,10 @@
                         <div class="col">
                             <div class="gift-container">
                                 <button type="button" class="btn btn-primary btn-block">
-                            Your Total Credits : 
-                            <a href="#" *ngIf="!isLoggedIn" class="credits-msg" data-toggle="modal" data-target="#exampleModal">login to see credits</a>
-                            <span *ngIf="isLoggedIn" class="badge badge-light">{{loggedUser.credits}}</span>
-                            </button>
+                                    Your Total Credits :
+                                    <a href="#" *ngIf="!isLoggedIn" class="credits-msg" data-toggle="modal" data-target="#exampleModal">login to see credits</a>
+                                    <span *ngIf="isLoggedIn" class="badge badge-light">{{loggedUser.credits}}</span>
+                                </button>
                                 <img class="bounce" src="assets/gift.png" />
                                 <button type="button" class="btn btn-danger btn-sm btn-block">Click to open</button>
                             </div>
@@ -190,8 +195,8 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">User Login</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <form #loginForm="ngForm">
                     <div class="modal-body">
@@ -203,7 +208,7 @@
                                 <div class="text-danger" [hidden]="!email.hasError('required')">* Email is required</div>
                             </div>
                         </div>
-<!--                         <div class="form-group">
+                        <!--                         <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
                             <input type="password" class="form-control" name="passwordfld" #passwordfld="ngModel" id="exampleInputPassword1" placeholder="Password"
                                 value="{{user.password}}" [(ngModel)]="user.password" required>
@@ -220,10 +225,107 @@
         </div>
     </div>
 
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">User SignUp</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form #signupForm="ngForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Name</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="newUserFld" #newUserFld="ngModel" aria-describedby="emailHelp"
+                                value="{{newUser.name}}" placeholder="Enter Name" [(ngModel)]="newUser.name" required>
+                            <div [hidden]="newUserFld.untouched && newUserFld.invalid && newUserFld.pristine || newUserFld.touched && newUserFld.dirty && newUserFld.valid">
+                                <div class="text-danger" [hidden]="!newUserFld.hasError('required')">* Name is required</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="newUseremail" #newUseremail="ngModel" aria-describedby="emailHelp"
+                                value="{{newUser.email}}" placeholder="Enter email" [(ngModel)]="newUser.email" required>
+                            <div [hidden]="newUseremail.untouched && newUseremail.invalid && newUseremail.pristine || newUseremail.touched && newUseremail.dirty && newUseremail.valid">
+                                <div class="text-danger" [hidden]="!newUseremail.hasError('required')">* Email is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary btn-block" (click)="createUser()" [disabled]="!signupForm.form.valid">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg stage-timeline sticky-bottom navbar-light bg-light" [ngClass]="{'hide-timeline': showTimeline == false, 'show-timeline': showTimeline == true}">
+        <button class="btn btn-default timeline-hide-btn" (click)="toggleTimeLine()">
+            <span *ngIf="showTimeline">
+                Hide timeline
+                <i class="fa fa-angle-double-down bounce-arrow"></i>
+            </span>
+            <span *ngIf="!showTimeline">
+                    Show timeline 
+                    <i class="fa fa-angle-double-up bounce-arrow"></i>
+                </span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="stage-number">1</span>
+                        <div class="stage-text">
+                            <h3 class="stage-title">Launch</h3>
+                            <div class="stage-date">15th June, 2018</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="stage-number">2</span>
+                        <div class="stage-text">
+                            <h3 class="stage-title">Quiz</h3>
+                            <div class="stage-date">15th June, 2018</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="stage-number">3</span>
+                        <div class="stage-text">
+                            <h3 class="stage-title">Session 1</h3>
+                            <div class="stage-date">15th June, 2018</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="stage-number">4</span>
+                        <div class="stage-text">
+                            <h3 class="stage-title">Session 2</h3>
+                            <div class="stage-date">15th June, 2018</div>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <span class="stage-number">5</span>
+                        <div class="stage-text">
+                            <h3 class="stage-title">Closure</h3>
+                            <div class="stage-date">15th June, 2018</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
 <div class="full-post animated slideInUp" *ngIf="readPost" id="read-article">
-     <i class="far fa-times-circle close" (click)="closeViewPost()"></i>
+    <i class="far fa-times-circle close" (click)="closeViewPost()"></i>
     <div class="row" style="margin: 0px;">
         <div class="col-md-10 offset-md-1">
             <h2>{{selectedPost.title}}</h2>
@@ -232,5 +334,5 @@
             <div [innerHTML]="selectedPost.content | keepHtml"></div>
         </div>
     </div>
-    
+
 </div>

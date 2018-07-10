@@ -2,45 +2,77 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title d-flex justify-content-between">
-                        <span>Post KM Article</span>
-                        <i class="far fa-times-circle" (click)="goToDashboard()"></i>
+                <form #articleForm="ngForm">
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-between">
+                            <span>Post KM Article</span>
+                            <i class="far fa-times-circle" (click)="goToDashboard()"></i>
 
-                    </h5>
-                    <div class="row">
-                        <div class="col-md-9">
-                            <label for="exampleInputEmail1">Title</label>
-                            <input type="text" class="form-control" placeholder="" [(ngModel)]="article.title">
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-9">
+                                <label for="exampleInputEmail1">Title</label>
+                                <input type="text" class="form-control" placeholder="" name="articleTitle" #articleTitle="ngModel" [(ngModel)]="article.title"
+                                    required>
+                                <div [hidden]="articleTitle.untouched && articleTitle.invalid && articleTitle.pristine || articleTitle.touched && articleTitle.dirty && articleTitle.valid">
+                                    <div class="text-danger" [hidden]="!articleTitle.hasError('required')">* Title is required</div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="exampleInputEmail1">Category</label>
+                                <select class="form-control" placeholder="Select" name="category" #category="ngModel" [(ngModel)]="article.category" required>
+                                    <option value="" [selected]="true">Select Category</option>
+                                    <option value="js">Javascript</option>
+                                    <option value="nodejs">NodeJS</option>
+                                </select>
+                                <div [hidden]="category.untouched && category.invalid && category.pristine || category.touched && category.dirty && category.valid">
+                                    <div class="text-danger" [hidden]="!category.hasError('required')">* Category is required</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <label for="exampleInputEmail1">Category</label>
-                            <select class="form-control" placeholder="Select" [(ngModel)]="article.category">
-                                <option value="">Select Category</option>
-                                <option value="js">Javascript</option>
-                                <option value="nodejs">NodeJS</option>
-                            </select>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleInputEmail1">URL (Link to KM article)</label>
+                                <input type="text" class="form-control" placeholder="Enter the KM link" name="link" #link="ngModel" [(ngModel)]="article.link"
+                                    required>
+                                <div [hidden]="link.untouched && link.invalid && link.pristine || link.touched && link.dirty && link.valid">
+                                    <div class="text-danger" [hidden]="!link.hasError('required')">* Link is required</div>
+                                </div>
+                            </div>
                         </div>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleInputEmail1">Description </label>
+                                <textarea type="text" class="form-control" placeholder="Enter the hyperlink" name="desc" #desc="ngModel" [(ngModel)]="article.description"
+                                    required> </textarea>
+                                <div [hidden]="desc.untouched && desc.invalid && desc.pristine || desc.touched && desc.dirty && desc.valid">
+                                    <div class="text-danger" [hidden]="!desc.hasError('required')">* Description is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div *ngIf="success" class="p-3 mb-2 bg-success text-white animated bounceIn status-msg">
+                            <i class="fa fa-smile"></i>
+                            <div class="msg-area d-flex w-100 justify-content-between">
+                                <span>Good Job !! Successfully published article</span>
+                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                            </div>
+                        </div>
+                        <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                            <i class="fa fa-frown"></i>
+                            <div class="msg-area d-flex w-100 justify-content-between">
+                                <span>Oops !! Something went wrong. Try again !!</span>
+                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle(articleForm)" [disabled]="!articleForm.form.valid">Publish KM Article
+                            <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
+                        </button>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col">
-                           <label for="exampleInputEmail1">URL (Link to KM article)</label>
-                            <input type="text" class="form-control" placeholder="Enter the KM link" [(ngModel)]="article.link">     
-                        </div>
-                    </div>
-                     <br>
-                    <div class="row">
-                        <div class="col">
-                           <label for="exampleInputEmail1">Description </label>
-                            <textarea type="text" class="form-control" placeholder="Enter the hyperlink" [(ngModel)]="article.description"> </textarea>   
-                        </div>
-                    </div>
-                     <br>
-                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle()">Publish KM Article
-                        <img *ngIf="loading" class="loading-img" src="assets/loading.gif"/>
-                    </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
