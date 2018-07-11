@@ -34,7 +34,8 @@ var postSchema = new mongoose.Schema({
     category: { type: String },
     content: { type: String },
     description: { type: String },
-    publisherId: { type: String }
+    publisherId: { type: String },
+    createdOn: {type: Date}
 });
 
 var articleSchema = new mongoose.Schema({
@@ -42,7 +43,8 @@ var articleSchema = new mongoose.Schema({
     category: { type: String },
     description: { type: String },
     link: { type: String },
-    publisherId: { type: String }
+    publisherId: { type: String },
+    createdOn: {type: Date}
 })
 
 userSchema.pre('save', function (next) {
@@ -246,14 +248,15 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
         category: req.body.category,
         content: req.body.content,
         description: req.body.description,
-        publisherId: req.user
+        publisherId: req.user,
+        createdOn: new Date()
     });
     post.save(function (err, result) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
         var query = { '_id': req.user };
-        User.findOneAndUpdate(query, { $inc: { credits: 10 } }, { upsert: true }, function (err, doc) {
+        User.findOneAndUpdate(query, { $inc: { credits: 5 } }, { upsert: true }, function (err, doc) {
             if (err) return res.send(500, { error: err });
             res.status(200).send({ msg: "success" });
         });
@@ -268,7 +271,8 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
         category: req.body.category,
         description: req.body.description,
         link: req.body.link,
-        publisherId: req.user
+        publisherId: req.user,
+        createdOn: new Date()
     });
     article.save(function (err, result) {
         if (err) {
@@ -284,7 +288,7 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
 
 app.get('/post/getAll', function (req, res) {
 
-    Post.find({}, '_id title category content description publisherId', function (err, posts) {
+    Post.find({}, '_id title category content description publisherId createdOn', {sort: {createdOn: -1}}, function (err, posts) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
@@ -316,7 +320,7 @@ app.get('/post/getAll', function (req, res) {
 
 app.get('/article/getAll', function (req, res) {
 
-    Article.find({}, '_id title category description link publisherId', function (err, articles) {
+    Article.find({}, '_id title category description link publisherId createdOn',{sort: {createdOn: -1}}, function (err, articles) {
         if (err) {
             res.status(500).send({ message: err.message });
         }

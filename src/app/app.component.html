@@ -1,4 +1,4 @@
 <router-outlet></router-outlet>
-<router-outlet name="postPopup"></router-outlet>
-<router-outlet name="articlePopup"></router-outlet>
+<router-outlet name="postPopup" (deactivate)='onDeactivate($event)'></router-outlet>
+<router-outlet name="articlePopup" (deactivate)='onArticleDeactivate($event)'></router-outlet>
 <router-outlet name="schedulePopup"></router-outlet>

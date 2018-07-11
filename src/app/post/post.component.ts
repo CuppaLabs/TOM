@@ -43,6 +43,9 @@ export class PostComponent {
             this.success = true;
             form.resetForm();
             this.post.category = "";
+            setTimeout(() => {
+                this.goToDashboard();
+            }, 2000);
         }, error => {
             this.failure = true;
             form.resetForm();

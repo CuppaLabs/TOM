@@ -224,3 +224,11 @@
     0%{-webkit-transform: translateY(71px);} 
     100% {-webkit-transform: translateY(0);}
 }
+
+.frown-alert-icon {
+    font-size: 80px;
+    padding: 20px 0;
+    display: block;
+    text-align: center;
+    margin-top: 30px;
+}

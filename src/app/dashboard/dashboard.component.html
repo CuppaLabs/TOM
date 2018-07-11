@@ -102,7 +102,7 @@
                     <div class="col-md-6">
                         <div class="d-flex w-100 justify-content-between card-heading">
                             <h4 class="mb-1">KM Articles</h4>
-                            <button class="btn btn-sm btn-primary" (click)="openArticleModal()">Post KM Article</button>
+                            <button class="btn btn-sm btn-primary" (click)="openArticleModal()">Add KM Link</button>
                         </div>
                         <div class="list-group">
                             <a target="_blank" *ngFor="let article of articles" href="{{article.link}}" class="list-group-item list-group-item-action flex-column align-items-start">
@@ -162,7 +162,7 @@
                                     <span *ngIf="isLoggedIn" class="badge badge-light">{{loggedUser.credits}}</span>
                                 </button>
                                 <img class="bounce" src="assets/gift.png" />
-                                <button type="button" class="btn btn-danger btn-sm btn-block">Click to open</button>
+                                <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal5">Click to open</button>
                             </div>
 
                         </div>
@@ -272,8 +272,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary btn-block" (click)="createUser(signupForm)" [disabled]="!signupForm.form.valid || loading">
-                                <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
-                                Submit</button>
+                            <img *ngIf="loading" class="loading-img" src="assets/loading.gif" /> Submit
+                        </button>
                     </div>
                 </form>
             </div>
@@ -353,4 +353,21 @@
         </div>
     </div>
 
+</div>
+
+<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body" style="text-align: center;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+                <i class="fa fa-frown text-danger frown-alert-icon"></i>
+                <h3 class="text-danger">Oops !!</h3>
+                <h5 class="text-danger">You do not have sufficient credits to open this.</h5>
+            </div>
+
+        </div>
+    </div>
 </div>

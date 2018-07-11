@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 
 
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 
@@ -11,7 +11,8 @@ import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class AppService {
-
+    private missionAnnouncedSource = new Subject<string>();
+    missionAnnounced$ = this.missionAnnouncedSource.asObservable();
    //domain = 'http://10.177.153.50:5000/';
    domain = 'http://localhost:5000/';
 
@@ -91,6 +92,9 @@ export class AppService {
             })
         };
     }
+    announceMission(mission: string) {
+        this.missionAnnouncedSource.next(mission);
+      }
     //////// Save methods //////////
 
     /** POST: add a new hero to the database */

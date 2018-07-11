@@ -38,25 +38,21 @@ export class Dashboard implements OnInit {
     showTimeline: Boolean = true;
     loading: Boolean = false;
     constructor(private router: Router, private appService: AppService, private sanitizer: DomSanitizer) {
-
     }
+
     ngOnInit() {
-        this.appService.getArticles().subscribe(
-            res => {
-                this.articles = res;
-            },
-            error => {
-
-            }
-        );
-        this.appService.getPosts().subscribe(
-            res => {
-                this.posts = res;
-            },
-            error => {
-
-            }
-        );
+        this.appService.missionAnnounced$.subscribe(
+            mission => {
+                if(mission == "posts"){
+                    this.loadPosts();
+                }
+                if(mission == "articles"){
+                    this.loadArticles();
+                }
+                
+            });
+        this.loadArticles();
+        this.loadPosts();
         this.appService.getUsers().subscribe(
             res => {
                 this.users = res;
@@ -69,6 +65,26 @@ export class Dashboard implements OnInit {
         if (sessionStorage.getItem("token")) {
             this.isLoggedIn = true;
         }
+    }
+    loadPosts() {
+        this.appService.getPosts().subscribe(
+            res => {
+                this.posts = res;
+            },
+            error => {
+
+            }
+        );
+    }
+    loadArticles() {
+        this.appService.getArticles().subscribe(
+            res => {
+                this.articles = res;
+            },
+            error => {
+
+            }
+        );
     }
     openPostModal() {
         if (this.isLoggedIn) {
@@ -112,7 +128,7 @@ export class Dashboard implements OnInit {
             }
         );
     }
-    createUser(form: NgForm){
+    createUser(form: NgForm) {
         this.loading = true;
         this.newUser.password = this.newUser.email;
         this.appService.createUser(this.newUser).subscribe(res => {
@@ -126,7 +142,7 @@ export class Dashboard implements OnInit {
             this.loading = false;
         });
     }
-    closeMsg(){
+    closeMsg() {
         this.success = false;
         this.failure = false;
     }
@@ -165,7 +181,7 @@ export class Dashboard implements OnInit {
         this.readPost = false;
     }
     toggleTimeLine() {
-        if(this.showTimeline){
+        if (this.showTimeline) {
             this.showTimeline = false;
         }
         else {

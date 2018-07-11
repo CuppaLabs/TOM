@@ -25,6 +25,8 @@ export class ArticleComponent {
 
     goToDashboard() {
         this.router.navigate([{ outlets: { articlePopup: null } }]);
+        //this.router.navigate(['/dashboard']);
+
     }
     createArticle(form: NgForm) {
         this.loading = true;
@@ -33,6 +35,9 @@ export class ArticleComponent {
             this.success = true;
             form.resetForm();
             this.article.category = "";
+            setTimeout(() => {
+                this.goToDashboard();
+            },2000);
         }, error => {
             this.failure = true;
             form.resetForm();
