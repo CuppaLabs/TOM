@@ -220,7 +220,7 @@ for (let i = 0; i < numBalls; i++) {
 balls.forEach((el, i, ra) => {
   let to = {
     x: Math.random() * 12,
-    y: -4
+    y: -5
   };
 
   let anim = el.animate(

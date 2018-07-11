@@ -3641,7 +3641,7 @@ Balloon flyers
   left: 0;
   right: 0;
   z-index: 9999999;
-  animation: fly 10s;
+  animation: fly 5s;
   animation-fill-mode: forwards;
 }
 .ball {
