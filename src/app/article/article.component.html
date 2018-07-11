@@ -68,7 +68,7 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle(articleForm)" [disabled]="!articleForm.form.valid">Publish KM Article
+                        <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createArticle(articleForm)" [disabled]="!articleForm.form.valid || loading">Publish KM Article
                             <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
                         </button>
                     </div>

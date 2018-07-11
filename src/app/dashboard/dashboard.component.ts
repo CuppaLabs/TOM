@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AppService } from '../app.services'
 import { DomSanitizer } from '@angular/platform-browser';
 import { BootstrapOptions } from '@angular/core/src/application_ref';
+import { NgForm } from '@angular/forms';
 
 declare var $: any;
 declare var $: any;
@@ -32,7 +33,10 @@ export class Dashboard implements OnInit {
         name: "",
         password: ""
     };
+    success: Boolean = false;
+    failure: Boolean = false;
     showTimeline: Boolean = true;
+    loading: Boolean = false;
     constructor(private router: Router, private appService: AppService, private sanitizer: DomSanitizer) {
 
     }
@@ -108,14 +112,23 @@ export class Dashboard implements OnInit {
             }
         );
     }
-    createUser(){
+    createUser(form: NgForm){
+        this.loading = true;
         this.newUser.password = this.newUser.email;
         this.appService.createUser(this.newUser).subscribe(res => {
-            alert("created");
+            this.success = true;
+            form.resetForm();
+            this.loading = false;
             console.log(res);
         }, error => {
-
+            this.failure = true;
+            form.resetForm();
+            this.loading = false;
         });
+    }
+    closeMsg(){
+        this.success = false;
+        this.failure = false;
     }
     logout() {
         sessionStorage.clear();

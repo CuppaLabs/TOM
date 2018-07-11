@@ -59,7 +59,7 @@
                                         <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createPost(postForm)" [disabled]="!postForm.form.valid">Publish Post
+                                <button type="button" class="btn btn-primary btn-lg btn-block" (click)="createPost(postForm)" [disabled]="!postForm.form.valid || loading">Publish Post
                                     <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
                                 </button>
                             </div>

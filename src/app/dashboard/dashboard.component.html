@@ -12,9 +12,9 @@
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/dashboard" routerLinkActive="active" href="#">Home</a>
                 </li>
-                <li class="nav-item">
+                <!--                 <li class="nav-item">
                     <a class="nav-link" (click)="openScheduleModal()">Schecule</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/faq" routerLinkActive="active" href="#">FAQ's</a>
                 </li>
@@ -253,9 +253,27 @@
                                 <div class="text-danger" [hidden]="!newUseremail.hasError('required')">* Email is required</div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <div *ngIf="success" class="p-3 mb-2 bg-success text-white animated bounceIn status-msg">
+                                <i class="fa fa-smile"></i>
+                                <div class="msg-area d-flex w-100 justify-content-between">
+                                    <span>Good Job !! Successfully published article</span>
+                                    <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                </div>
+                            </div>
+                            <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                                <i class="fa fa-frown"></i>
+                                <div class="msg-area d-flex w-100 justify-content-between">
+                                    <span>Oops !! Something went wrong. Try again !!</span>
+                                    <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary btn-block" (click)="createUser()" [disabled]="!signupForm.form.valid">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block" (click)="createUser(signupForm)" [disabled]="!signupForm.form.valid || loading">
+                                <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
+                                Submit</button>
                     </div>
                 </form>
             </div>
@@ -268,9 +286,9 @@
                 <i class="fa fa-angle-double-down bounce-arrow"></i>
             </span>
             <span *ngIf="!showTimeline">
-                    Show timeline 
-                    <i class="fa fa-angle-double-up bounce-arrow"></i>
-                </span>
+                Show timeline
+                <i class="fa fa-angle-double-up bounce-arrow"></i>
+            </span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
@@ -279,7 +297,7 @@
                         <span class="stage-number">1</span>
                         <div class="stage-text">
                             <h3 class="stage-title">Launch</h3>
-                            <div class="stage-date">15th June, 2018</div>
+                            <div class="stage-date">12th July, 2018</div>
                         </div>
                     </a>
                 </li>
@@ -288,7 +306,7 @@
                         <span class="stage-number">2</span>
                         <div class="stage-text">
                             <h3 class="stage-title">Quiz</h3>
-                            <div class="stage-date">15th June, 2018</div>
+                            <div class="stage-date">18th July, 2018</div>
                         </div>
                     </a>
                 </li>
@@ -297,7 +315,7 @@
                         <span class="stage-number">3</span>
                         <div class="stage-text">
                             <h3 class="stage-title">Session 1</h3>
-                            <div class="stage-date">15th June, 2018</div>
+                            <div class="stage-date">24th July, 2018</div>
                         </div>
                     </a>
                 </li>
@@ -306,7 +324,7 @@
                         <span class="stage-number">4</span>
                         <div class="stage-text">
                             <h3 class="stage-title">Session 2</h3>
-                            <div class="stage-date">15th June, 2018</div>
+                            <div class="stage-date">26th July, 2018</div>
                         </div>
                     </a>
                 </li>
@@ -315,7 +333,7 @@
                         <span class="stage-number">5</span>
                         <div class="stage-text">
                             <h3 class="stage-title">Closure</h3>
-                            <div class="stage-date">15th June, 2018</div>
+                            <div class="stage-date">30th July, 2018</div>
                         </div>
                     </a>
                 </li>
