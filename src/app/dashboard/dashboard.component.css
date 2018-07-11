@@ -209,11 +209,11 @@
     box-shadow: none;
 }
 .hide-timeline {
-    animation: hide-anim 1s linear;
+    animation: hide-anim .5s linear;
     animation-fill-mode: forwards;
 }
 .show-timeline {
-    animation: show-anim 1s linear;
+    animation: show-anim .3s linear;
     animation-fill-mode: forwards;
 }
 @keyframes hide-anim {
@@ -231,4 +231,14 @@
     display: block;
     text-align: center;
     margin-top: 30px;
+}
+.gold-coin {
+    width: 25px;
+    height: 25px;
+    background-color: #FFD700;
+    color: #000;
+    text-align: center;
+    padding: 8px 0px;
+    box-shadow: 2px 2px 14px #b0b0b0;
+    border-radius: 25px;
 }

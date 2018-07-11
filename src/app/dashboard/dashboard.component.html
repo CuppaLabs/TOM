@@ -159,7 +159,7 @@
                                 <button type="button" class="btn btn-primary btn-block">
                                     Your Total Credits :
                                     <a href="#" *ngIf="!isLoggedIn" class="credits-msg" data-toggle="modal" data-target="#exampleModal">login to see credits</a>
-                                    <span *ngIf="isLoggedIn" class="badge badge-light">{{loggedUser.credits}}</span>
+                                    <span *ngIf="isLoggedIn" class="badge badge-light gold-coin">{{loggedUser.credits}}</span>
                                 </button>
                                 <img class="bounce" src="assets/gift.png" />
                                 <button type="button" class="btn btn-danger btn-sm btn-block" data-toggle="modal" data-target="#exampleModal5">Click to open</button>
@@ -178,7 +178,7 @@
                                         <div>
                                             <img class="user-avatar" src="assets/avatar.png" /> {{user.name}}
                                         </div>
-                                        <span class="badge badge-primary badge-pill">{{user.credits}}</span>
+                                        <span class="badge badge-primary badge-pill gold-coin">{{user.credits}}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -216,9 +216,20 @@
                                 <div class="text-danger" [hidden]="!passwordfld.hasError('required')">* Password is required</div>
                             </div>
                         </div> -->
+                        <div class="form-group">
+                                <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                                    <i class="fa fa-frown"></i>
+                                    <div class="msg-area d-flex w-100 justify-content-between">
+                                        <span>Oops !! Something went wrong. Try again !!</span>
+                                        <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                    </div>
+                                </div>
+                            </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!loginForm.form.valid">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block" (click)="login()" [disabled]="!loginForm.form.valid">
+                                <img *ngIf="loading" class="loading-img" src="assets/loading.gif" /> Submit
+                        </button>
                     </div>
                 </form>
             </div>

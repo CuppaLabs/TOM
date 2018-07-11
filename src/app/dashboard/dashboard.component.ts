@@ -41,6 +41,7 @@ export class Dashboard implements OnInit {
     }
 
     ngOnInit() {
+        this.animateBalloons();
         this.appService.missionAnnounced$.subscribe(
             mission => {
                 if(mission == "posts"){
@@ -108,9 +109,11 @@ export class Dashboard implements OnInit {
         this.editorInstance = editorInstance;
     }
     login() {
+        this.loading = true;
         this.user.password = this.user.email;
         this.appService.login(this.user).subscribe(
             res => {
+                this.loading = false;
                 console.log(res);
                 $('#exampleModal').modal('hide')
                 sessionStorage.setItem("token", res.token);
@@ -124,7 +127,8 @@ export class Dashboard implements OnInit {
                 }
             },
             error => {
-
+                this.loading = false;
+                this.failure = true;
             }
         );
     }
@@ -187,5 +191,53 @@ export class Dashboard implements OnInit {
         else {
             this.showTimeline = true;
         }
+    }
+    animateBalloons() {
+        // Some random colors
+const colors = ["balloon-0", "balloon-1", "balloon-2", "balloon-3"];
+
+const numBalls = 50;
+const balls = [];
+let ballConatiner = document.createElement("div");
+ballConatiner.setAttribute('id','balloon-container')
+document.getElementsByTagName('body')[0].appendChild(ballConatiner);
+
+for (let i = 0; i < numBalls; i++) {
+  let ball = document.createElement("div");
+  ball.classList.add("ball");
+  ball.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+  ball.style.left = `${Math.floor(Math.random() * 90)}vw`;
+  ball.style.top = `${Math.floor(Math.random() * 70)}vh`;
+  ball.style.transform = `scale(${Math.random()})`;
+  
+  balls.push(ball);
+
+  document.getElementById('balloon-container').appendChild(ball);
+  //document.getElebody.append(ball);
+}
+
+// Keyframes
+balls.forEach((el, i, ra) => {
+  let to = {
+    x: Math.random() * 12,
+    y: -4
+  };
+
+  let anim = el.animate(
+    [
+      { transform: `translate(${to.x}rem, ${to.y}rem)` },
+      { transform: "translate(0, 0)" }
+      
+    ],
+    {
+      duration: (Math.random() + 1) * 2000, // random duration
+      direction: "alternate",
+      fill: "forwards",
+      iterations: Infinity,
+      easing: "ease-in-out"
+    }
+  );
+});
+
     }
 }
