@@ -15,14 +15,14 @@
 }
 .sticky-header {
     padding: 15px;
-    margin-top: 48px;
+    margin-top: 24px;
     box-shadow: -3px 2px 10px #ccc;
     z-index: 999999;
     position: absolute;
 }
 .left-sticky {
-    top: 115px;
-    height: calc(100vh - 115px);
+    top: 355px;
+    height: calc(100vh - 360px);
     padding: 0px;
 }
 .left-sticky .list-group{
@@ -136,7 +136,7 @@
     60% {transform: translateY(-15px);}
 }
 .full-post {
-    position: absolute;
+    position: fixed;
     top: 48px;
     right: 0;
     left: 25%;
@@ -241,4 +241,50 @@
     padding: 8px 0px;
     box-shadow: 2px 2px 14px #b0b0b0;
     border-radius: 25px;
+}
+.navbar-brand {
+    background: #f80000;
+}
+.navbar-brand:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: 24px;
+    background-size: 64% auto;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/logo.svg');
+    opacity: 1;
+    background-position: 50% 50%;
+}
+.timeline-status {
+    width: 35px;
+    position: absolute;
+    right: 22px;
+    top: 19px;
+}
+.post-description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+}
+.reports-grid {
+    padding:65px 0px 0px 0px;
+    text-align: center;
+    margin: 0px;
+}
+.reports-grid > ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    border-top: 1px solid #ccc;
+}
+.reports-grid > ul > li{
+    padding: 10px 0px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+.reports-grid > ul > li:nth-child(2), .reports-grid > ul > li:nth-child(4){
+    border-right: 0px;
 }

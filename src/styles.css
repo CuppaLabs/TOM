@@ -48,7 +48,7 @@ body {
   top: 0;
   bottom: 0;
   left: 0;
-  z-index: 100; /* Behind the navbar */
+  z-index: 1; /* Behind the navbar */
   padding: 0;
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
@@ -3635,17 +3635,19 @@ body {
 Balloon flyers
 */
 #balloon-container {
+  pointer-events: none;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 9999999;
-  animation: fly 5s;
+  animation: fly 10s;
   animation-fill-mode: forwards;
 }
 .ball {
   position: absolute;
+  pointer-events: none;
   opacity: 1;
   width: 50px;
   height: 100px;
@@ -3685,4 +3687,31 @@ background-repeat: no-repeat;
 	to {
 		transform: translateY(-100vh);
 	}
+}
+.timer-num {
+  font-size: 25px;
+  color: red;
+}
+#cTimer {
+  text-align: center;
+}
+
+.aclass{
+  text-align: center;
+}
+.full-post {
+  position: fixed;
+  top: 48px;
+  right: 0;
+  left: 25%;
+  width: 75%;
+  height: calc(100vh - 50px);
+  background: #fff;
+  z-index: 999;
+  overflow: auto;
+  padding-top: 20px;
+  box-shadow: 0px 0px 10px #ccc;
+}
+.full-post img {
+  width: 100%;
 }

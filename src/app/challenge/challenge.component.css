@@ -1,0 +1,36 @@
+.modal-body {
+    position: fixed;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: rgba(51, 51, 51, 0.71);
+}
+.card-body {
+    height: calc(100vh - 30px);
+    overflow: auto;
+}
+.list-icon {
+    float: left;
+    margin: 0px 10px 0px 0px;
+    width: 45px;
+}
+.list-icon img {
+    width: 100%;
+}
+.dropzone {
+    cursor: pointer;
+    min-height: 140px;
+    border: 1px dashed #1ab394;
+    background: white;
+    padding: 20px 20px;
+}
+.dropzone .dz-message {
+    font-size: 16px;
+    text-align: center;
+    margin: 2em 0;
+}
+.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border: dotted 3px red; } /* Default class applied to drop zones on over */
+.another-file-over-class { border: dotted 3px green; }

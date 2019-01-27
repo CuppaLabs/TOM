@@ -1,0 +1,118 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body" style="height: calc(100vh - 50px)">
+                    <div class="row">
+                        <div class="col-md-3" style="height: calc(100vh - 112px); overflow: auto;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Connected Users - {{userList?.length}}</h5>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li *ngFor="let user of userList" class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <img class="user-avatar" src="assets/avatar.png" /> {{user.username}}
+                                        </div>
+                                        <span class="badge badge-success badge-pill gold-coin" style="display: inline-block;"></span>
+                                    </li>
+                                </ul>
+                                <!--                                         <div class="card-body">
+                                          <a href="#" class="card-link">Card link</a>
+                                          <a href="#" class="card-link">Another link</a>
+                                        </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body panel-height" [ngClass]="{'show-quespanel': newUser.email == 'pradeep.terli@oracle.com','show-quespanel2': newUser.email == 'suchit.kumar@oracle.com' }">
+                                    <h4 class="card-title pricing-card-title">Question #{{currentQuestion?.quesNum}}</h4>
+                                    <div [innerHTML]="currentQuestion?.question"></div>
+                                    <b>Chose the correct answer from below options</b>
+                                    <br>
+                                    <input *ngIf="currentQuestion?.optionA != ''" name="options" ng-control="options" type="radio" [value]="'optionA'" [(ngModel)]="answer.answer">
+                                    <span> {{currentQuestion?.optionA}}</span>
+                                    <br>
+                                    <input *ngIf="currentQuestion?.optionB != ''" name="options" ng-control="options" type="radio" [value]="'optionB'" [(ngModel)]="answer.answer">
+                                    <span> {{currentQuestion?.optionB}}</span>
+                                    <br>
+                                    <input *ngIf="currentQuestion?.optionC != ''" name="options" ng-control="options" type="radio" [value]="'optionC'" [(ngModel)]="answer.answer">
+                                    <span> {{currentQuestion?.optionC}}</span>
+                                    <br>
+                                    <input *ngIf="currentQuestion?.optionD != ''" name="options" ng-control="options" type="radio" [value]="'optionD'" [(ngModel)]="answer.answer">
+                                    <span> {{currentQuestion?.optionD}}</span>
+                                    <br>
+
+                                    <!--                                     <div class="btn-group btn-group-vertical" data-toggle="buttons">
+                                            <label class="btn active">
+                                            </label>
+                                            <label class="btn">
+                                            </label>
+                                          </div> -->
+                                    <div class="form-group">
+                                        <div *ngIf="success" class="p-3 mb-2 bg-success text-white animated bounceIn status-msg">
+                                            <i class="fa fa-smile"></i>
+                                            <div class="msg-area d-flex w-100 justify-content-between">
+                                                <span>Successfully answered</span>
+                                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                                            <i class="fa fa-frown"></i>
+                                            <div class="msg-area d-flex w-100 justify-content-between">
+                                                <span>{{errorMsg}}</span>
+                                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary btn-block" disabled>Submit</button>
+
+
+                                </div>
+                                <div class="card-footer" style="
+                                background: #fff;">
+                                    <ul class="ques-list row">
+                                        <li class="col-md-2" *ngFor="let ques of questionList; let i = index" (click)="publishQues(ques)" [ngClass]="{'active': ques.active}">
+                                            Question #{{ques.quesNum}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3" style="height: calc(100vh - 112px); overflow: auto;">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Result</h5>
+                                    <div class="btn-group col" role="group" aria-label="Basic example" style="padding: 0px;">
+                                        <button type="button" class="btn btn-default col">
+                                            Total
+                                            <br> {{total}}
+                                        </button>
+                                        <button type="button" class="btn btn-default col">
+                                            Correct
+                                            <br> {{rtotal}}
+                                        </button>
+                                        <button type="button" class="btn btn-default col">
+                                            Wrong
+                                            <br> {{wtotal}}
+                                        </button>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center text-white" *ngFor="let user of result" [ngClass]="{'bg-success': user.flag, 'bg-danger': !user.flag}">{{user.email}} - {{user.credits}}</li>
+                                </ul>
+                                <!--                                         <div class="card-body">
+                                          <a href="#" class="card-link">Card link</a>
+                                          <a href="#" class="card-link">Another link</a>
+                                        </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <!--                     <h5 class="card-title d-flex justify-content-between">
+                        <span>
+                            <b>Regsiter for Sessions</b>
+                        </span>
+                        <i class="far fa-times-circle" (click)="goToDashboard()"></i>
+
+                    </h5> -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card">
+                                <img class="card-img-top" src="assets/js.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h1 class="card-title pricing-card-title">Session 1</h1>
+                                    <h4 class="card-title pricing-card-title">31st July, 2018</h4>
+                                    <h5 class="card-title pricing-card-title">2:00 PM - 3:00 PM</h5>
+                                    <ul>
+                                        <li>JS V8 Engine</li>
+                                        <li>JS Re-usable Components</li>
+                                        <li>JS apps Building blocks</li>
+                                        <li>JS patterns</li>
+                                        <li>JS app perfomance</li>
+                                        <li>TOM app Fullstack MEAN App Example</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <img class="card-img-top" src="assets/nodejs.jpg" alt="Card image cap" style="height: 143px;">
+                                <div class="card-body">
+                                    <h1 class="card-title pricing-card-title">Session 2</h1>
+                                    <h4 class="card-title pricing-card-title">2nd August, 2018</h4>
+                                    <h5 class="card-title pricing-card-title">2:00 PM - 3:00 PM</h5>
+                                    <ul>
+                                        <li>Node server</li>
+                                        <li>express framework</li>
+                                        <li>Modules & Schemas</li>
+                                        <li>REST API's</li>
+                                        <li>Websocket & File stream</li>
+                                        <li>Chat App Example (MEAN full stack) </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                                <div class="card">
+                                        <div class="card-body">
+                            <h3>REGISTER</h3>
+                            <form #signupForm="ngForm">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="newUserFld" #newUserFld="ngModel" aria-describedby="emailHelp"
+                                            value="{{newUser.name}}" placeholder="Enter Name" [(ngModel)]="newUser.name" required disabled>
+                                        <div [hidden]="newUserFld.untouched && newUserFld.invalid && newUserFld.pristine || newUserFld.touched && newUserFld.dirty && newUserFld.valid">
+                                            <div class="text-danger" [hidden]="!newUserFld.hasError('required')">* Name is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" name="newUseremail" #newUseremail="ngModel" aria-describedby="emailHelp"
+                                            value="{{newUser.email}}" placeholder="Enter email" [(ngModel)]="newUser.email" required disabled>
+                                        <div [hidden]="newUseremail.untouched && newUseremail.invalid && newUseremail.pristine || newUseremail.touched && newUseremail.dirty && newUseremail.valid">
+                                            <div class="text-danger" [hidden]="!newUseremail.hasError('required')">* Email is required</div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div *ngIf="success" class="p-3 mb-2 bg-success text-white animated bounceIn status-msg">
+                                            <i class="fa fa-smile"></i>
+                                            <div class="msg-area d-flex w-100 justify-content-between">
+                                                <span>Successfully registered for the session</span>
+                                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                                            <i class="fa fa-frown"></i>
+                                            <div class="msg-area d-flex w-100 justify-content-between">
+                                                <span>{{errorMsg}}</span>
+                                                <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-block" (click)="register(signupForm)" [disabled]="loading">
+                                         Register
+                                    </button>
+                                    <div class="qr-code">
+                                            <img *ngIf="loading" class="loading-img" src="assets/loading-color.gif" />
+                                            <div><img *ngIf="!loading && qrCode && qrCode!=''" [src]="qrCode" style="width:200px;height: 200px;"/></div>
+
+                                    </div>
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                                <h3>Instructions</h3>
+                                <ul style="padding-left: 5px;line-height: 30px;">
+                                    <li>Once you register, a QR Code is generated. Right click on the code and save as image.</li>
+                                    <li>You need to carry the QR code to the session.</li>
+                                    <li>You would get <b>20 points</b> for <b>each session.</b></li>
+                                    <li>Points get credited, once you attend the session with the qr code.</li>
+                                    <li>For any assistance, please use the feedback page to write to us. We will provide the necessary
+                                        assistance.
+                                    </li>
+                                </ul>
+                            </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <b>Venue</b>: <span> Will be updated and shared shortly</span>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

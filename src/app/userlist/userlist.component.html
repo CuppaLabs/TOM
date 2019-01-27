@@ -1,0 +1,17 @@
+<div class="row" style="margin: 0px;">
+    <div class="col">
+        <div class="d-flex w-100 justify-content-between card-heading">
+            <h5 class="mb-1">Who registered for session</h5>
+        </div>
+        <div class="user-list">
+            <ul class="list-group">
+                <li *ngFor="let user of users" class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <img class="user-avatar" src="assets/avatar.png" /> {{user.name}}
+                    </div>
+                    <span class="badge badge-primary badge-pill gold-coin">{{user.credits}}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

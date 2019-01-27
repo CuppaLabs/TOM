@@ -1,0 +1,157 @@
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title d-flex justify-content-between">
+                        <span>
+                            <b>Take Coding Challenge</b>
+                        </span>
+                        <i class="far fa-times-circle" (click)="goToDashboard()"></i>
+
+                    </h5>
+                    <hr>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-5" style="border-right: 1px solid #ccc;">
+                            <form #postForm="ngForm">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div *ngIf="challenge.category" class="list-icon">
+                                            <img *ngIf="challenge.category == 'js'" src="assets/js-logo.png" />
+                                            <img *ngIf="challenge.category == 'nodejs'" src="assets/nodejs-logo.jpg" />
+                                        </div>
+                                        <label for="exampleInputEmail1">
+                                            <b>Problem Statement</b>
+                                        </label>
+                                        <p>{{challenge.statement}}</p>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleInputEmail1">
+                                            <b>Description</b>
+                                        </label>
+                                        <p>{{challenge.description}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleInputEmail1">
+                                            <b>Members who took this challenge</b>
+                                        </label>
+                                        <ul>
+                                            <li *ngFor="let member of challenge.members">
+                                                {{member.name}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-md-4" style="border-right: 1px solid #ccc;">
+                            <h2>Upload Code</h2>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form #fileform>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+                                        </div>
+                                        <div *ngIf="uploader.queue.length == 0">
+                                            <span class="text-danger">* File is required</span>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-12">
+                                    <div>
+                                        <div>
+                                            Status:
+                                            <div class="progress" style="">
+                                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <button type="button" class="btn btn-success btn-s"
+                                                            (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">
+                                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                                    </button> -->
+                                        <!--  <button type="button" class="btn btn-warning btn-s"
+                                                            (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger btn-s"
+                                                            (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                                        <span class="glyphicon glyphicon-trash"></span> Remove all
+                                                    </button> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" name="newUserFld" aria-describedby="emailHelp" value="{{loggedUser.name}}"
+                                            disabled>
+                                    </div>
+                                    <div class="col">
+                                        <label for="exampleInputEmail1">Email address</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" name="newUseremail" aria-describedby="emailHelp" value="{{loggedUser.email}}"
+                                            disabled>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div *ngIf="success" class="p-3 mb-2 bg-success text-white animated bounceIn status-msg">
+                                        <i class="fa fa-smile"></i>
+                                        <div class="msg-area d-flex w-100 justify-content-between">
+                                            <span>Good Job !! Successfully submitted Challenge. We will review and discuss in the
+                                                upcoming sessions.
+                                            </span>
+                                            <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="failure" class="p-3 mb-2 bg-danger text-white animated bounceIn status-msg">
+                                        <i class="fa fa-frown"></i>
+                                        <div class="msg-area d-flex w-100 justify-content-between">
+                                            <span>{{errorMsg}}</span>
+                                            <a class="msg-dismiss" (click)="closeMsg()">Dismiss</a>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" (click)="uploadFile(uploader)" [disabled]="uploader.isUploading || uploader.queue.length == 0">Submit Challenge
+                                        <img *ngIf="loading" class="loading-img" src="assets/loading.gif" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div style="text-align: center;">
+                                <h4 style="margin-top: 10px;text-align: center;">Time Remaining</h4>
+                                <div countdownTimer id="cTimer2"></div>
+                            </div>
+                            <h3>Instructions</h3>
+                            <ul style="padding-left: 5px;line-height: 30px;">
+                                <li>Once you complete coding and ready with your solution, follow the below steps</li>
+                                <li>1) Zip your project folder.</li>
+                                <li>2) Exclude node_modules folder when zipping the source.</li>
+                                <li>3) Include a .txt or .readme file, explaining the setup and installation steps , so that
+                                    we can run your code in our local machines to view your solution.</li>
+                                <li>4) You can upload only once.</li>
+                                <li>5) You would get
+                                    <b>30 credits</b> for taking this challenge.</li>
+                                <li>For any assistance, please use the feedback page to write to us. We will provide the necessary
+                                    assistance.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@ import { AppService } from './app.services'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  title = 'Theme of the month';
   constructor(private router: Router, private appService: AppService) {
 
   }

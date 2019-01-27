@@ -1,0 +1,25 @@
+
+
+<div class="list-group">
+    <a [routerLink]="" [ngClass]="{'active': post.active}" *ngFor="let post of list " class="list-group-item list-group-item-action flex-column align-items-start"
+        (click)="selectePost(post)">
+        <div class="row">
+
+        </div>
+        <div class="d-flex w-100 justify-content-between">
+            <a [routerLink]="">
+                <h5 class="mb-1">{{post.title}}</h5>
+            </a>
+        </div>
+        <div *ngIf="post.category" class="list-icon">
+            <img *ngIf="post.category == 'js'" src="assets/js-logo.png" />
+            <img *ngIf="post.category == 'nodejs'" src="assets/nodejs-logo.jpg" />
+        </div>
+        <p class="mb-1 post-description">{{post.description}}</p>
+        <div class="d-flex w-100 justify-content-between">
+            <small>By : {{post.user.name}}</small>
+            <a [routerLink]="">Read more...</a>
+        </div>
+    </a>
+</div>
+

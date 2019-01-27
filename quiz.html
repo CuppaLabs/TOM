@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>QUIZ</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1976d2">
+    <script>
+            if (!!window.EventSource) {
+                var source = new EventSource('http://localhost:5000/stream')
+
+                source.addEventListener('message', function (e) {
+                    data = JSON.parse(e.data)
+                    console.log(data);
+                }, false)
+
+                source.addEventListener('open', function (e) {
+                    console.log("connected");
+                }, false)
+
+                source.addEventListener('error', function (e) {
+                    console.log(e);
+                }, false)
+            } else {
+                console.log("Your browser doesn't support SSE")
+            }
+
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

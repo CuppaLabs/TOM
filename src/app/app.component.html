@@ -1,4 +1,9 @@
 <router-outlet></router-outlet>
 <router-outlet name="postPopup" (deactivate)='onDeactivate($event)'></router-outlet>
-<router-outlet name="articlePopup" (deactivate)='onArticleDeactivate($event)'></router-outlet>
+<router-outlet name="articlePopup" (deactivate)='onArticleDeactivate()'></router-outlet>
+<router-outlet name="challengePopup" (deactivate)='onArticleDeactivate()'></router-outlet>
+<router-outlet name="sessionPopup"></router-outlet>
+<router-outlet name="quizPopup"></router-outlet>
+<router-outlet name="statisticsPopup"></router-outlet>
+
 <router-outlet name="schedulePopup"></router-outlet>
