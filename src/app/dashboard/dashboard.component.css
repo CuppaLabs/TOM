@@ -1,8 +1,6 @@
 .carousel{
     background: #ccc;
     margin-top: -15px;
-    margin-left: -20px;
-    margin-right: -20px;
 }
 .nav-link {
     cursor: pointer;
@@ -14,15 +12,15 @@
     font-size: 22px;
 }
 .sticky-header {
-    padding: 15px;
-    margin-top: 24px;
-    box-shadow: -3px 2px 10px #ccc;
+    padding: 10px;
+    /* margin-top: 50px; */
     z-index: 999999;
-    position: absolute;
+/*     position: absolute;
+ */    border-bottom: 1px solid #ccc;
 }
 .left-sticky {
-    top: 355px;
-    height: calc(100vh - 360px);
+    top: 155px;
+    height: calc(100vh - 105px);
     padding: 0px;
 }
 .left-sticky .list-group{
@@ -33,7 +31,10 @@
 }
 .left-sidebar {
     box-shadow: none;
-    border-right: 1px solid #ccc;
+    position: fixed;
+}
+.left-sidebar .card-body {
+    padding: 0px;
 }
 .list-icon {
         float: left;
@@ -43,7 +44,9 @@
     width: 35px;
 }
 .bg-dark {
-    background-color: #247ed8 !important;
+    background-color: #ffffff !important;
+    box-shadow: 0px 0px 10px #a2a2a2;
+    margin-bottom: 10px;
 }
 .card-heading {
     padding: 10px 0px;
@@ -51,7 +54,7 @@
     margin-bottom: 10px;
 }
 .user-avatar {
-    width: 25px;
+    width: 32px;
     border-radius: 25px;
     margin-right: 10px;
 }
@@ -94,9 +97,16 @@
     bottom: -10px !important;
 }
 .user-list {
-    height: calc(100vh - 380px);
+    height: calc(100vh - 50px);
     overflow: auto;
     background: #fff;
+}
+.user-list .list-group {
+    padding: 0px;
+}
+.user-list .list-group li{
+    border: none;
+    padding: 0.4rem 0.75rem;
 }
 .bounce {
     animation: bounce 2s;
@@ -216,14 +226,14 @@
     animation: show-anim .3s linear;
     animation-fill-mode: forwards;
 }
-@keyframes hide-anim {
+/* @keyframes hide-anim {
     0%{-webkit-transform: translateY(0);} 
     100% {-webkit-transform: translateY(71px);}
 }
 @keyframes show-anim {
     0%{-webkit-transform: translateY(71px);} 
     100% {-webkit-transform: translateY(0);}
-}
+} */
 
 .frown-alert-icon {
     font-size: 80px;
@@ -243,24 +253,37 @@
     border-radius: 25px;
 }
 .navbar-brand {
-    background: #f80000;
+    background: #ffffff;
+    padding: 0px;
 }
 .navbar-brand:before {
     display: block;
     content: "";
     width: 100%;
-    padding-top: 24px;
+    /* padding-top: 24px; */
     background-size: 64% auto;
     background-repeat: no-repeat;
-    background-image: url('../../assets/logo.svg');
+    background-image: url('../../assets/logo2.png');
     opacity: 1;
     background-position: 50% 50%;
+    padding: 22px;
+}
+.user-info-grp .dropdown-toggle{
+    background: none;    
+}
+.user-info-grp .dropdown-toggle:focus {
+    outline: none;
+    box-shadow: none;
+}
+.dropdown-menu{
+    width: 100%;
 }
 .timeline-status {
-    width: 35px;
     position: absolute;
-    right: 22px;
-    top: 19px;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
 }
 .post-description {
     overflow: hidden;
@@ -287,4 +310,28 @@
 }
 .reports-grid > ul > li:nth-child(2), .reports-grid > ul > li:nth-child(4){
     border-right: 0px;
+}
+.grid-block-1{
+    overflow: hidden;
+}
+.grid-block-1 img{
+    transform: scale(1.32) translateY(32px);
+}
+.grid-block-2{
+    max-height: 185px;
+}
+.grid-block-2 img{
+    max-height: 175px;
+    min-height: 175px;
+}
+.banner-soon {
+    position: absolute;
+    background: #00000069;
+    color: #fff;
+    padding: 10px;
+    bottom: 10px;
+}
+.left-sidebar .card-body{
+    overflow: auto;
+    height: calc(100vh - 115px);
 }

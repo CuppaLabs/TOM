@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start":"ng serve",
+    "start": "ng serve",
     "start-server": "node server",
     "build": "ng build",
     "test": "ng test",
@@ -35,6 +35,7 @@
     "cors": "^2.7.1",
     "crypto": "^1.0.1",
     "express": "^4.13.4",
+    "express-sse": "*",
     "fs": "0.0.1-security",
     "http-server": "^0.9.0",
     "https": "^1.0.0",
@@ -43,8 +44,10 @@
     "jwt-simple": "^0.4.1",
     "moment": "*",
     "mongoose": "^4.4.6",
+    "mongoose-timestamp": "^0.6.0",
     "morgan": "^1.7.0",
     "multer": "*",
+    "ng-event-source": "*",
     "ng2-file-upload": "*",
     "ng2-interceptors": "*",
     "ng4-date-countdown-timer": "*",
@@ -53,11 +56,9 @@
     "qrcode": "^1.2.0",
     "request": "^2.69.0",
     "rxjs": "^5.5.6",
-    "zone.js": "^0.8.19",
-    "socket.io-client": "^1.7.3",
     "socket.io": "1.7",
-    "ng-event-source": "*",
-    "express-sse": "*"
+    "socket.io-client": "^1.7.3",
+    "zone.js": "^0.8.19"
   },
   "devDependencies": {
     "@angular/cli": "~6.0.8",

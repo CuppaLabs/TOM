@@ -48,7 +48,8 @@ export class Dashboard implements OnInit {
     }
 
     ngOnInit() {
-        this.animateBalloons();
+        console.log(this.loggedUser);
+       // this.animateBalloons();
         this.appService.missionAnnounced$.subscribe(
             mission => {
                 if (mission == "posts") {
@@ -59,6 +60,10 @@ export class Dashboard implements OnInit {
                 }
 
             });
+        this.appService.userIsLoggedIn.subscribe(user => {
+            this.isLoggedIn = true;
+            this.loggedUser = user;
+        });
         this.loadArticles();
         this.loadPosts();
         this.appService.getUsers().subscribe(
@@ -150,6 +155,7 @@ export class Dashboard implements OnInit {
         this.user.password = this.user.email;
         this.appService.login(this.user).subscribe(
             res => {
+                
                 this.loading = false;
                 console.log(res);
                 $('#exampleModal').modal('hide')
@@ -214,7 +220,7 @@ export class Dashboard implements OnInit {
     getUserProfile() {
         this.appService.getUserProfile().subscribe(
             res => {
-                this.loggedUser = Object.assign(this.loggedUser, res);
+                this.loggedUser = res;
             },
             error => {
 

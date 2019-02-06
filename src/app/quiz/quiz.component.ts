@@ -41,8 +41,8 @@ constructor(private appService: AppService, private changeDetector: ChangeDetect
 }
 
 ngOnInit(){
-     this.sseStream = this.appService.observe('http://10.177.153.50:5000/stream')
-     //this.sseStream = this.appService.observe('http://localhost:5000/stream')
+     //this.sseStream = this.appService.observe('http://10.177.153.50:5000/stream')
+     this.sseStream = this.appService.observe('http://localhost:5000/stream')
     .subscribe(message => {
         var data = JSON.parse(message);
         this.result.push(JSON.parse(message));

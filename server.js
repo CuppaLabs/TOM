@@ -21,12 +21,14 @@ var config = require('./auth-config');
 var nodemailer = require('nodemailer');
 var topic = "dailyNotifications";
 var multer = require('multer');
-var QRCode = require('qrcode')
+var QRCode = require('qrcode');
+var timestamps = require('mongoose-timestamp');
+
 //var h5bp = require('h5bp');
 var compression = require('compression');
 var io = require('./io');
 var sse = require('./io');
-//var sse = require('./sse');
+var sse = require('./sse');
 var connections = [];
 
 
@@ -36,7 +38,9 @@ var userSchema = new mongoose.Schema({
     name: { type: String },
     credits: { type: Number },
     quizScore: { type: Number },
-    qrcode: { type: String }
+    qrcode: { type: String },
+    image: {type: String},
+    description: {type: String}
 });
 
 var postSchema = new mongoose.Schema({
@@ -44,16 +48,16 @@ var postSchema = new mongoose.Schema({
     category: { type: String },
     content: { type: String },
     description: { type: String },
-    publisherId: { type: String },
+    publisherId: { type: String, ref: 'User' },
     createdOn: { type: Date }
 });
-
+postSchema.plugin(timestamps);
 var articleSchema = new mongoose.Schema({
     title: { type: String },
     category: { type: String },
     description: { type: String },
     link: { type: String },
-    publisherId: { type: String },
+    publisherId: { type: String, ref: 'User' },
     createdOn: { type: Date }
 });
 
@@ -92,7 +96,14 @@ var questionSchema = new mongoose.Schema({
     users: [userSchema],
     rusers: [userSchema],
     wusers: [userSchema]
-})
+});
+var activitySchema = new mongoose.Schema({
+    description: { type: String },
+    keyword: { type: String },
+    type: { type: String},
+    userId: { type: String, ref: 'User' }
+});
+activitySchema.plugin(timestamps);
 
 userSchema.pre('save', function (next) {
     var user = this;
@@ -120,6 +131,7 @@ var Challenge = mongoose.model('Challenge', challengeSchema);
 var Feedback = mongoose.model('Feedback', feedbackSchema);
 var Session = mongoose.model('Session', sessionSchema);
 var Question = mongoose.model('Question', questionSchema);
+var Activity = mongoose.model('Activity',activitySchema);
 
 mongoose.connect(config.MONGO_URI, {
     useMongoClient: true,
@@ -132,13 +144,13 @@ mongoose.connection.on('error', function (err) {
 var app = express();
 app.use(compression());
 
-app.set('port', process.env.PORT || 9999);
+app.set('port', process.env.PORT || 5000);
 //app.set('host', process.env.NODE_IP || 'localhost');
 app.use(cors());
 //app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(sse)
+app.use(sse)
 
 // Force HTTPS on Heroku
 if (app.get('env') === 'production') {
@@ -150,16 +162,16 @@ if (app.get('env') === 'production') {
 //app.use(h5bp({ root: __dirname + '/dist' }));
 app.use(express.static(path.join(__dirname, '/dist')));
 app.use('/static', express.static(path.join(__dirname, '/presentations/static')))
-//const quizServer = http.createServer(app);
-//io(quizServer);
-/* quizServer.listen(5300, (err) => {
+const quizServer = http.createServer(app);
+io(quizServer);
+quizServer.listen(5300, (err) => {
     if (err) {
         console.log('could not start listening', err.message || err);
         process.exit();
     }
     console.log('app starting');
     console.log('Quiz server is listening on 5300');
-}); */
+});
 /*function subscribeToNews() {
     User.find((err, devices) => {
         if (!err && devices) {
@@ -576,7 +588,19 @@ app.get('/api/profile', ensureAuthenticated, function (req, res) {
         res.send(user);
     });
 });
-
+app.get('/api/profile/:id', ensureAuthenticated, function (req, res) {
+    User.findById(req.params.id, function (err, user) {
+        res.send(user);
+    });
+});
+app.put('/api/profile/:id', ensureAuthenticated, function (req, res) {
+    User.findByIdAndUpdate(req.params.id, req.body,{ new: true }, function (err, user) {
+        if(err){
+            return res.status(401).send({ message: 'Error Occured' });
+        }
+        res.send(user);
+    });
+});
 /*
  |--------------------------------------------------------------------------
  | PUT /api/me
@@ -650,12 +674,27 @@ app.post('/auth/login', function (req, res) {
         if (!user) {
             return res.status(401).send({ message: 'Invalid email and/or password' });
         }
+        var activity = new Activity({
+            description: 'Signed into Theme of the month portal',
+            keyword: 'Login',
+            userId: req.user,
+            type: 'login'
+        });
         user.comparePassword(req.body.password, function (err, isMatch) {
             if (!isMatch) {
                 return res.status(401).send({ message: 'Invalid email and/or password' });
             }
             User.findOne({ _id: user }, 'name email', function (err, user) {
-                res.send({ token: createJWT(user), user: user });
+                if (err) {
+                    res.status(500).send({ message: err.message });
+                } else {
+                    activity.userId = user.id;
+                    activity.save(function (err, result) {
+                        res.send({ token: createJWT(user), user: user });
+                    });
+                }
+                
+                
             });
 
         });
@@ -678,11 +717,23 @@ app.post('/auth/signup', function (req, res) {
             password: req.body.password,
             credits: 0
         });
+        var activity = new Activity({
+            description: 'Registered to Theme of the month portal',
+            keyword: 'Get started',
+            userId: req.user,
+            type: 'signup'
+        });
         user.save(function (err, result) {
             if (err) {
                 res.status(500).send({ message: err.message });
+            } else {
+                activity.userId = result.id;
+                activity.save(function (err, act) {
+                    res.send({ token: createJWT(result) });
+                });
             }
-            res.send({ token: createJWT(result) });
+            
+            
         });
     });
 });
@@ -697,6 +748,12 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
         publisherId: req.user,
         createdOn: new Date()
     });
+    var activity = new Activity({
+        description: 'Created a new post '+post.title,
+        keyword: 'Update on blockchain',
+        userId: req.user,
+        type: 'post'
+    });
     post.save(function (err, result) {
         if (err) {
             res.status(500).send({ message: err.message });
@@ -704,12 +761,26 @@ app.post('/post/create', ensureAuthenticated, function (req, res) {
         var query = { '_id': req.user };
         User.findOneAndUpdate(query, { $inc: { credits: 5 } }, { upsert: true }, function (err, doc) {
             if (err) return res.send(500, { error: err });
-            res.status(200).send({ msg: "success" });
+            activity.save(function (err, result) {
+                res.status(200).send({ msg: "success" });
+            });
+            
         });
 
     });
 });
-
+app.get('/useractivities/:id', ensureAuthenticated, function(req, res){
+    
+    Activity.find({userId: req.params.id}, '', { sort: { createdAt: -1 } })
+    .populate('userId')
+    .exec(function (err, activities) {
+        if (err) {
+            res.status(500).send({ message: err.message });
+        }
+        else
+        res.status(200).send(activities);
+    });
+});
 app.post('/article/create', ensureAuthenticated, function (req, res) {
 
     var article = new Article({
@@ -720,6 +791,12 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
         publisherId: req.user,
         createdOn: new Date()
     });
+    var activity = new Activity({
+        description: 'Created a KM document '+req.body.title,
+        keyword: 'KM doc',
+        userId: req.user,
+        type: 'kmDoc'
+    });
     article.save(function (err, result) {
         if (err) {
             res.status(500).send({ message: err.message });
@@ -727,11 +804,24 @@ app.post('/article/create', ensureAuthenticated, function (req, res) {
         var query = { '_id': req.user };
         User.findOneAndUpdate(query, { $inc: { credits: 10 } }, { upsert: true }, function (err, doc) {
             if (err) return res.send(500, { error: err });
-            res.status(200).send({ msg: "success" });
+            activity.save(function (err, result) {
+                res.status(200).send({ msg: "success" });
+            });
+            
         });
     });
 });
-
+app.post('/activities/create',function(req, res){
+    var activity = new Activity({
+        description: req.body.description,
+        keyword: req.body.keyword,
+        userId: req.user,
+        type: req.body.type
+    });
+    activity.save(function (err, result) {
+        res.status(200).send({ msg: "success" });
+    });
+});
 app.post('/challenge/create', ensureAuthenticated, function (req, res) {
 
     var challenge = new Challenge({
@@ -793,11 +883,20 @@ app.post('/feedback/create', ensureAuthenticated, function (req, res) {
         publisherId: req.user,
         createdOn: new Date()
     });
+    var activity = new Activity({
+        description: 'Created a KM document',
+        keyword: 'KM doc',
+        userId: req.user,
+        type: 'kmDoc'
+    });
     feedback.save(function (err, result) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        res.status(200).send({ msg: "success" });
+        activity.save(function (err, result) {
+            res.status(200).send({ msg: "success" });
+        });
+        
         /*         let transporter = nodemailer.createTransport({
                     host: 'stbeehive.oracle.com',
                     port: 465,
@@ -828,66 +927,26 @@ app.post('/feedback/create', ensureAuthenticated, function (req, res) {
 
 app.get('/post/getAll', function (req, res) {
 
-    Post.find({}, '_id title category content description publisherId createdOn', { sort: { createdOn: -1 } }, function (err, posts) {
+    Post.find({}, '_id title category content description publisherId createdOn', { sort: 'createdAt'})
+    .populate('publisherId')
+    .exec(function (err, posts) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        var len = posts.length;
-        var resArr = [];
-        var currIndex = 0;
-        if (len > 0) {
-            posts.forEach(post => {
-
-                User.findOne({ _id: post.publisherId }, 'name email', function (err, user) {
-                    var tempObj = {};
-                    tempObj = Object.assign(tempObj, post);
-                    tempObj._doc['user'] = user;
-                    resArr.push(tempObj._doc);
-                    ++currIndex;
-                    if (currIndex == len) {
-                        res.send(resArr).end();
-                    }
-                });
-
-            });
-        }
-        else {
-            res.send(resArr).end();
-        }
+        res.send(posts).end();
 
     });
 });
 
 app.get('/article/getAll', function (req, res) {
 
-    Article.find({}, '_id title category description link publisherId createdOn', { sort: { createdOn: -1 } }, function (err, articles) {
+    Article.find({}, '_id title category description link publisherId createdOn', { sort: { createdOn: -1 } })
+    .populate('publisherId')
+    .exec(function (err, articles) {
         if (err) {
             res.status(500).send({ message: err.message });
         }
-        var len = articles.length;
-        var resArr = [];
-        var currIndex = 0;
-        if (len > 0) {
-            articles.forEach(article => {
-
-                User.findOne({ _id: article.publisherId }, 'name email', function (err, user) {
-                    var tempObj = {};
-                    tempObj = Object.assign(tempObj, article);
-                    tempObj._doc['user'] = user;
-                    resArr.push(tempObj._doc);
-                    ++currIndex;
-                    if (currIndex == len) {
-                        res.status(200).send(resArr).end();
-                    }
-                });
-
-            });
-        }
-        else {
-            res.status(200).send(resArr).end();
-        }
-
-
+        res.status(200).send(articles).end();
     });
 });
 
@@ -985,6 +1044,6 @@ app.get('*', (req, res) => {
 });
 
 
-app.listen(5000, 'localhost', function () {
+app.listen(app.get('port'), app.get('host'), function () {
     console.log('Express server listening on port 5000');
 });

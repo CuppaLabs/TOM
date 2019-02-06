@@ -22,7 +22,8 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { PostListComponent } from './post/postlist.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { StatisticsComponent } from './statistics/statistics.component';
-
+import { UserProfile } from './userProfile/userprofile.component';
+import { EqualValidator } from './validator.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +38,9 @@ import { StatisticsComponent } from './statistics/statistics.component';
     RegisterComponent,
     PostListComponent,
     QuizComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    UserProfile,
+    EqualValidator
   ],
   imports: [
     BrowserModule,

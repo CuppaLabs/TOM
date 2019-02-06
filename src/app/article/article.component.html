@@ -22,8 +22,7 @@
                                 <label for="exampleInputEmail1">Category</label>
                                 <select class="form-control" placeholder="Select" name="category" #category="ngModel" [(ngModel)]="article.category" required>
                                     <option value="" [selected]="true">Select Category</option>
-                                    <option value="js">Javascript</option>
-                                    <option value="nodejs">NodeJS</option>
+                                    <option value="blockchain">Blockchain</option>
                                 </select>
                                 <div [hidden]="category.untouched && category.invalid && category.pristine || category.touched && category.dirty && category.valid">
                                     <div class="text-danger" [hidden]="!category.hasError('required')">* Category is required</div>

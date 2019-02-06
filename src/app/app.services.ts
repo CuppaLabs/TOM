@@ -29,6 +29,7 @@ export class AppService {
     loginUrl = this.domain + 'auth/login';
     profileUrl = this.domain + 'api/profile';
     createUserUrl = this.domain + 'auth/signup';
+    updateUserUrl = this.domain + 'api/profile';
     createChallengeUrl = this.domain + 'challenge/create';
     giveFeedbackrUrl = this.domain + 'feedback/create';
     challengesUrl = this.domain + 'challenge/getAll';
@@ -37,6 +38,10 @@ export class AppService {
     quesAnswerUrl = this.domain + 'question/answer';
     questionResult = this.domain + 'question/result';
     statisticsUrl = this.domain + 'statistics';
+    activityUrl = this.domain + 'useractivities';
+
+    public userLoginStatus = new Subject<string>();
+    userIsLoggedIn = this.userLoginStatus.asObservable();
 
     private socket: any;
     httpOptions = {
@@ -162,6 +167,18 @@ export class AppService {
                 tap(_ => 'done'
                 ));
     }
+    getUserProfileById(id:any): Observable<any[]> {
+        return this.http.get<any[]>(this.profileUrl+'/'+id, this.setHeaders())
+            .pipe(
+                tap(_ => 'done'
+                ));
+    }
+    getUserActivities(id:any): Observable<any[]> {
+        return this.http.get<any[]>(this.activityUrl+'/'+id, this.setHeaders())
+            .pipe(
+                tap(_ => 'done'
+                ));
+    }
     createArticle(data: any): Observable<any> {
         return this.http.post<any>(this.createArticleUrl, data, this.setHeaders())
             .pipe(
@@ -214,6 +231,12 @@ export class AppService {
     }
     announceMission(mission: string) {
         this.missionAnnouncedSource.next(mission);
+    }
+    updateUser(user: any, id: any): Observable<any> {
+        return this.http.put<any>(this.updateUserUrl+'/'+id, user, this.setHeaders())
+            .pipe(
+                tap(_ => 'done'
+                ));
     }
     //////// Save methods //////////
 

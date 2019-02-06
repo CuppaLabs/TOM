@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{user.name}}</h5>
+                <p class="card-text" *ngIf="!editUserDesc" class="edit-pen">{{user.description}}
+                        <i class="fa fa-pen" *ngIf="!editUserDesc" (click)="editUserDesc = true"></i>
+                </p>
+                
+                <div class="input-group mb-3" *ngIf="editUserDesc">
+                    <input type="text" [(ngModel)]="user.description" class="form-control" placeholder="User description"
+                        aria-label="User description" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2" (click)="editUserDesc = false"><i class="fa fa-times"></i></span>
+                        <span class="input-group-text" id="basic-addon2"><i class="fa fa-check" (click)="updateUser()"></i></span>
+                    </div>
+                </div>
+            </div>
+            <img src="" class="card-img-top" onError="this.src='assets/avatar.png';" alt="...">
+            <div class="card-body">
+                <h6>About Me</h6>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <!--         <div class="card">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pradeep Kumar Terli</h5>
+                    <p class="card-text">Senior Consultant | Oracle JET | Front End Engineering</p>
+                    
+
+                </div>
+            </div>
+        </div>
+        <br> -->
+        <div class="card">
+            <div class="card">
+                <div class="card-header">
+                    Activities
+                </div>
+            </div>
+        </div>
+        <div class="card" *ngFor="let activity of activities">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col pr-md-0 activity-avatar">
+                            <img src="" class="card-img-top" onError="this.src='assets/avatar.png';" alt="...">
+                        </div>
+                        <div class="col">
+                            <h6 class="card-title"><b>{{activity.userId.name}}</b> {{activity.description}} [
+                                {{activity.keyword}} ]</h6>
+                            <small class="card-text">{{activity.createdAt | date: 'dd MMMM, yyyy hh:mm:ss a'}}</small>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

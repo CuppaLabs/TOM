@@ -9,11 +9,18 @@ import { ChallengeComponent } from './challenge/challenge.component';
 import { RegisterComponent } from './register/register.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { StatisticsComponent } from './statistics/statistics.component';
+import { UserProfile } from './userProfile/userprofile.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     {
         path: 'dashboard', component: Dashboard
+    },
+    {
+        path: 'user/:id', component: UserProfile
+    },
+    {
+        path:'quiz', component: QuizComponent
     },
     { path: 'faq', component: FaqComponent },
     { path: 'schedule', component: ScheduleComponent, outlet: 'schedulePopup' },
