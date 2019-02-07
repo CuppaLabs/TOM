@@ -15,10 +15,10 @@ const EventSource: any = window['EventSource'];
 export class AppService {
     private missionAnnouncedSource = new Subject<string>();
     missionAnnounced$ = this.missionAnnouncedSource.asObservable();
-    //domain = 'http://10.177.153.50:5000/';
-    //socketDomain = 'http://10.177.153.50:5300';
-    domain = 'http://localhost:5000/';
-    socketDomain = 'http://localhost:5300';
+    domain = 'http://10.177.153.50:5000/';
+    socketDomain = 'http://10.177.153.50:5300';
+    //domain = 'http://localhost:5000/';
+    //socketDomain = 'http://localhost:5300';
 
     articlesUrl = this.domain + 'article/getAll';  // URL to web api
     postsUrl = this.domain + 'post/getAll';

@@ -23,6 +23,8 @@ var topic = "dailyNotifications";
 var multer = require('multer');
 var QRCode = require('qrcode');
 var timestamps = require('mongoose-timestamp');
+var swaggerUi = require('swagger-ui-express'),
+    swaggerDocument = require('./swagger.json');
 
 //var h5bp = require('h5bp');
 var compression = require('compression');
@@ -151,6 +153,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sse)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Force HTTPS on Heroku
 if (app.get('env') === 'production') {
