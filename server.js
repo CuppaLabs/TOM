@@ -372,6 +372,15 @@ app.get('/statistics', function (req, res) {
         });
     });
 });
+
+app.get('/getplaces', function (req, res) {
+    request('https://www.swiggy.com/dapi/misc/places-autocomplete?input=vizag&types=', { json: true }, (err, res, body) => {
+  if (err) { return console.log(err); }
+  console.log(body.url);
+  console.log(body.explanation);
+});
+});
+
 app.post('/question/create', ensureAuthenticated, function (req, res) {
 
     var question = new Question({
